@@ -1,0 +1,396 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/b3e438769b.js" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap" rel="stylesheet">
+<style>
+    .hello-msg {
+        font-size: 18px;
+        color: white;
+        margin-right: 20px;
+    }
+
+    body {
+        background-color: #f9f9fa
+    }
+
+    .padding {
+        padding: 3rem !important
+    }
+
+    .user-card-full {
+        overflow: hidden
+    }
+
+    .card {
+        border-radius: 5px;
+        -webkit-box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
+        box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
+        border: none;
+        margin-bottom: 30px
+    }
+
+    .m-r-0 {
+        margin-right: 0px
+    }
+
+    .m-l-0 {
+        margin-left: 0px
+    }
+
+    .user-card-full .user-profile {
+        border-radius: 5px 0 0 5px
+    }
+
+    .bg-c-lite-green {
+        background: -webkit-gradient(linear, left top, right top, from(#f29263), to(#ee5a6f));
+        background: linear-gradient(to right, #ee5a6f, #f29263)
+    }
+
+    .user-profile {
+        padding: 20px 0
+    }
+
+    .card-block {
+        padding: 1.25rem
+    }
+
+    .m-b-25 {
+        margin-bottom: 25px
+    }
+
+    .img-radius {
+        border-radius: 5px
+    }
+
+    h6 {
+        font-size: 14px
+    }
+
+    .card .card-block p {
+        line-height: 25px
+    }
+
+    @media only screen and (min-width: 1400px) {
+        p {
+            font-size: 14px
+        }
+    }
+
+    .card-block {
+        padding: 1.25rem
+    }
+
+    .b-b-default {
+        border-bottom: 1px solid #e0e0e0
+    }
+
+    .m-b-20 {
+        margin-bottom: 20px
+    }
+
+    .p-b-5 {
+        padding-bottom: 5px !important
+    }
+
+    .card .card-block p {
+        line-height: 25px
+    }
+
+    .m-b-10 {
+        margin-bottom: 10px
+    }
+
+    .text-muted {
+        color: #919aa3 !important
+    }
+
+    .b-b-default {
+        border-bottom: 1px solid #e0e0e0
+    }
+
+    .f-w-600 {
+        font-weight: 600
+    }
+
+    .m-b-20 {
+        margin-bottom: 20px
+    }
+
+    .m-t-40 {
+        margin-top: 20px
+    }
+
+    .p-b-5 {
+        padding-bottom: 5px !important
+    }
+
+    .m-b-10 {
+        margin-bottom: 10px
+    }
+
+    .m-t-40 {
+        margin-top: 20px
+    }
+
+    body {
+        background-color: #f9f9fa
+    }
+
+    .padding {
+        padding: 3rem !important
+    }
+
+    .user-card-full {
+        overflow: hidden
+    }
+
+    .card {
+        border-radius: 5px;
+        -webkit-box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
+        box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
+        border: none;
+        margin-bottom: 30px
+    }
+
+    .m-r-0 {
+        margin-right: 0px
+    }
+
+    .m-l-0 {
+        margin-left: 0px
+    }
+
+    .user-card-full .user-profile {
+        border-radius: 5px 0 0 5px
+    }
+
+    .bg-c-lite-green {
+        background: -webkit-gradient(linear, left top, right top, from(#63c5f2), to(#5a5cee));
+        background: linear-gradient(to right, #5aa6ee, #3542b8)
+    }
+
+    .user-profile {
+        padding: 20px 0
+    }
+
+    .card-block {
+        padding: 1.25rem
+    }
+
+    .m-b-25 {
+        margin-bottom: 25px
+    }
+
+    .img-radius {
+        border-radius: 5px
+    }
+
+    h6 {
+        font-size: 14px
+    }
+
+    .card .card-block p {
+        line-height: 25px
+    }
+
+    @media only screen and (min-width: 1400px) {
+        p {
+            font-size: 14px
+        }
+    }
+
+    .card-block {
+        padding: 1.25rem
+    }
+
+    .b-b-default {
+        border-bottom: 1px solid #e0e0e0
+    }
+
+    .m-b-20 {
+        margin-bottom: 20px
+    }
+
+    .p-b-5 {
+        padding-bottom: 5px !important
+    }
+
+    .card .card-block p {
+        line-height: 25px
+    }
+
+    .m-b-10 {
+        margin-bottom: 10px
+    }
+
+    .text-muted {
+        color: #919aa3 !important
+    }
+
+    .b-b-default {
+        border-bottom: 1px solid #e0e0e0
+    }
+
+    .f-w-600 {
+        font-weight: 600
+    }
+
+    .m-b-20 {
+        margin-bottom: 20px
+    }
+
+    .m-t-40 {
+        margin-top: 20px
+    }
+
+    .p-b-5 {
+        padding-bottom: 5px !important
+    }
+
+    .m-b-10 {
+        margin-bottom: 10px
+    }
+
+    .m-t-40 {
+        margin-top: 20px
+    }
+
+    .user-card-full .social-link li {
+        display: inline-block
+    }
+
+    .user-card-full .social-link li a {
+        font-size: 20px;
+        margin: 0 10px 0 0;
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out
+    }
+
+    .user-card-full .social-link li {
+        display: inline-block
+    }
+
+    .user-card-full .social-link li a {
+        font-size: 20px;
+        margin: 0 10px 0 0;
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out
+    }
+
+    .update_button {
+        color: white;
+        background-color: #3542b8;
+        background-image: linear-gradient(315deg, #3542b8 0%, #5aa6ee 74%);
+        border: none;
+        padding: 13px;
+        border-radius: 10px;
+        transition: all .2s ease-in-out;
+        font-family: 'Sunflower', sans-serif;
+        text-transform: uppercase;
+    }
+
+    .update_button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 6px -6px rgb(45, 118, 228);
+    }
+
+    .update_button:focus {
+        outline: 0;
+    }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container mx-auto">
+        <a class="navbar-brand" href="#">FitForYou</a>
+
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto justify-content-center">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">O nas</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Przydatne Linki
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Dieta</a>
+                        <a class="dropdown-item" href="#">Trening</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <span class="hello-msg">Hello, {{request.user}}</span>
+    <span><a class="hello-msg" href="{% url 'logout' %}"">Logout</a></span>
+</nav>
+
+<nav class=" navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link active" href="{% url 'profile' %}"><i
+                                class="fa fa-fw fa-user"></i>&nbsp;Mój profil
+                            <span class="sr-only">(current)</span></a>
+                        <a class="nav-item nav-link" href="{% url 'training' %}"><i
+                                class="fas fa-dumbbell"></i>&nbsp;Trening</a>
+                        <a class="nav-item nav-link" href="{% url 'diet' %}"><i
+                                class="fas fa-utensils"></i>&nbsp;Dieta</a>
+                        <a class="nav-item nav-link" href="{% url 'diet' %}"><i
+                                class="fas fa-utensils"></i>&nbsp;Calculator</a>
+                        <a class="nav-item nav-link disabled" href="#">Disabled</a>
+                    </div>
+                </div>
+            </div>
+</nav>
+
+<div class="container text-center " style="margin-top: 15px;">
+    <div class="row ">
+        <div class="col-12 mx-auto">
+        <div class="card">
+            <div class="card-header">
+               Calculator
+            </div>
+            <div class="card-body">
+               <form method="POST">
+                {% csrf_token %}
+                <label>
+                    Enter your weight:
+                    <input type="number" name="weight">
+                </label>
+                <input type="radio" id="choice1" name="choice" value="normal_intake">
+                <label for="choice1">Normal Intake</label>
+                <input type="radio" id="choice2" name="choice" value="mass">
+                <label for="choice2">Mass</label>
+                <input type="radio" id="choice3" name="choice" value="reduction">
+                <label for="choice3">Reduction</label>
+                    <!-- okolo 31-35 kcal na 1kg masy ciala, bialko 2g na kg, fats 25-40% okolo, 1g tluszczu -> 9kcal , 1g bialka -> 4kcal, wegle reszta -->
+                   <input type="submit">
+               </form>
+               <p>{{ text }}</p>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

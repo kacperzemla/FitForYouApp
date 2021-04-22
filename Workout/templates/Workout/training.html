@@ -1,0 +1,133 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/b3e438769b.js" crossorigin="anonymous"></script>
+<style>
+    .hello-msg{
+        font-size: 18px;
+        color: white;
+        margin-right: 20px;
+    }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container mx-auto">
+        <a class="navbar-brand" href="#">FitForYou</a>
+
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto justify-content-center">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">O nas</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Przydatne Linki
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Dieta</a>
+                        <a class="dropdown-item" href="#">Trening</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <span class="hello-msg">Hello, {{request.user}}</span>
+    <span><a class="hello-msg" href="{% url 'logout' %}"">Logout</a></span>
+</nav>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="#"><i class="fa fa-fw fa-user"></i>&nbsp;Mój profil <span
+                        class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="#"><i class="fas fa-dumbbell"></i>&nbsp;Trening</a>
+                <a class="nav-item nav-link" href="{% url 'diet' %}"><i class="fas fa-utensils"></i>&nbsp;Dieta</a>
+                <a class="nav-item nav-link disabled" href="#">Disabled</a>
+                <a class="btn btn-primary" href="{% url 'createTraning' user.id%}"> Add new Traning</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    EXCERSISES
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <tr>
+                            <th> ID </th>
+                            <th> NAME </th>
+                            <th> ADD </th>
+                        </tr>
+
+                        {% for i in exercises%}
+                            <tr>
+                                <td>{{i.id}}</td>
+                                <td>{{i.name}}</td>
+                                <td><a href="">ADD</td>
+                            </tr>
+
+                        {% endfor %}
+                    </table>
+                    <table class="table">
+                        <tr>
+                            <th> date </th>
+                            <th> exercise </th>
+                            <th> category </th>
+                            <th>weight</th>
+                            <th>sesion</th>
+                            <th>reps</th>
+                            <th>delete</th>
+                            <th>update</th>
+
+
+                        </tr>
+
+                        {% for i in traning%}
+                            <tr>
+                                <td>{{i.date}}</td>
+                                <td>{{i.exercise.category}}</td>
+                                <td>{{i.exercise}}</td>
+                                <td>{{i.weigth}}</td>
+                                <td>{{i.sesion}}</td>
+                                <td>{{i.reps}}</td> 
+                                <td> <a class="btn btn-sm btn-info" href="{% url 'updateTraining' i.id%}">UPDATE</a> </td>
+                                <td> <a class="btn btn-sm btn-danger" href="{% url 'deleteTraining' i.id%}">DELETE</a> </td>
+
+                            </tr>
+
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
