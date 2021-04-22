@@ -75,44 +75,28 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    EXCERSISES
+                    Training
                 </div>
                 <div class="card-body">
-                    <table class="table">
-                        <tr>
-                            <th> ID </th>
-                            <th> NAME </th>
-                            <th> ADD </th>
-                        </tr>
+                
 
-                        {% for i in exercises%}
-                            <tr>
-                                <td>{{i.id}}</td>
-                                <td>{{i.name}}</td>
-                                <td><a href="">ADD</td>
-                            </tr>
-
-                        {% endfor %}
-                    </table>
                     <table class="table">
                         <tr>
                             <th> date </th>
                             <th> exercise </th>
                             <th> category </th>
-                            <th>weight</th>
-                            <th>sesion</th>
-                            <th>reps</th>
-                            <th>delete</th>
-                            <th>update</th>
-
-
+                            <th> weight </th>
+                            <th> sesion </th>
+                            <th> reps </th>
+                            <th> delete </th>
+                            <th> update </th>
                         </tr>
 
                         {% for i in traning%}
                             <tr>
                                 <td>{{i.date}}</td>
-                                <td>{{i.exercise.category}}</td>
                                 <td>{{i.exercise}}</td>
+                                <td>{{i.exercise.category}}</td>
                                 <td>{{i.weigth}}</td>
                                 <td>{{i.sesion}}</td>
                                 <td>{{i.reps}}</td> 
