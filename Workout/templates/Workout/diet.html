@@ -17,6 +17,22 @@
         color: white;
         margin-right: 20px;
     }
+    .mybtn{
+        color: white;
+        background-color: #3542b8;
+        background-image: linear-gradient(315deg, #3542b8 0%, #5aa6ee 74%);
+        border: none;
+        padding: 13px;
+        border-radius: 10px;
+        transition: all .2s ease-in-out;
+        font-family: 'Sunflower', sans-serif;
+        text-transform: uppercase;
+    }
+
+    .mybtn:hover{
+        transform: scale(1.1);
+        box-shadow: 0 8px 6px -6px rgb(45, 118, 228);
+    }
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -64,21 +80,60 @@
                         <a class="nav-item nav-link" href="#"><i class="fas fa-dumbbell"></i>&nbsp;Trening</a>
                         <a class="nav-item nav-link" href="{% url 'diet' %}"><i class="fas fa-utensils"></i>&nbsp;Dieta</a>
                         <a class="nav-item nav-link disabled" href="#">Disabled</a>
-                        <a class="btn btn-primary" href="{% url 'createTraning' user.id%}""> Add new Traning</a>
+                        <a class="btn btn-primary" href="{% url 'createTraning' user.id%}"> Add new Traning</a>
             </div>
         </div>
     </div>
 </nav>
 
-<div class="container text-center">
+<div class="text-center" style="margin-top: 15px;">
+    <label class="btn">
+    <a class="btn btn-primary mybtn" href="{% url 'createMeal' user.id%}">ADD NEW MEAL</a>
+    </label>
+</div>
+
+<div class="container text-center " style="margin-top: 15px;">
     <div class="row ">
-        <div class="col-5 mx-auto">
+        <div class="col-12 mx-auto">
         <div class="card">
             <div class="card-header">
-                Dieta
+               Your Diet
             </div>
             <div class="card-body">
-                ddd
+                <table class="table">
+                    <tr>
+
+                        <th> name </th>
+                        <th> kcal </th>
+                        <th>carbs</th>
+                        <th>fats</th>
+                        <th>proteins</th>
+                        <th> date </th>
+                        <th> day</th>
+                        <th></th>
+
+
+
+                    </tr>
+
+                    {% for i in meals reversed%}
+                        <tr>
+
+                            <td>{{i.name}}</td>
+                            <td>{{i.kcal}}</td>
+                            <td>{{i.carbs}}</td>
+                            <td>{{i.fats}}</td>
+                            <td>{{i.proteins}}</td>
+                            <td>{{i.date}}</td>
+                            <td>{{ i.date| date:"l"}}</td>
+
+
+                            <td> <a class="btn btn-sm btn-danger" href="{% url 'deleteMeal' i.id%}">DELETE</a> </td>
+
+                        </tr>
+
+                    {% endfor %}
+                </table>
             </div>
         </div>
         </div>

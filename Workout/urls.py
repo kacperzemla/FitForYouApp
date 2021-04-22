@@ -15,4 +15,7 @@ urlpatterns = [
     path('training',views.training, name='training'),
     path('exercises',views.exercises, name='exercises'),
     path('updateProfile',views.updateProfile, name='updateProfile'),
+    path('createMeal/<str:pk>',views.createMeal, name="createMeal"),
+    path('deleteMeal/<str:pk>',views.deleteMeal, name='deleteMeal'),
+    path('calculator',views.calculator, name='calculator'),
 ]
