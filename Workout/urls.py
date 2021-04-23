@@ -18,4 +18,6 @@ urlpatterns = [
     path('createMeal/<str:pk>',views.createMeal, name="createMeal"),
     path('deleteMeal/<str:pk>',views.deleteMeal, name='deleteMeal'),
     path('calculator',views.calculator, name='calculator'),
+    path('rankings',views.rankings, name='rankings'),
+
 ]

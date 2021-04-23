@@ -31,6 +31,7 @@ def register(request):
             Customer.objects.create(
                 user=user,
                 name='default',
+                username=user.username,
             )
             user = form.cleaned_data.get('username')
             messages.success(request, 'Account was created for ' + user)
@@ -230,6 +231,7 @@ def calculator(request):
 @login_required(login_url='main')
 def exercises(request):
     exercises  = Exercises.objects.all()
+    print (exercises)
     chest = []
     legs = []
     abs_ =[]
@@ -258,3 +260,40 @@ def exercises(request):
         
     context = {'chest':chest,'legs':legs,'back':back,'abs_':abs_,'shoulders':shoulders,'bic_tric':bic_tric,'cardio':cardio,'booty':booty}
     return render(request, 'Workout/exercises.html', context)
+ 
+def rankings(request):
+    bufor = Training.objects.filter().order_by('-weigth')
+    benchPressMasters = {}
+    top5 = 0;
+    for cybant in bufor:
+        if cybant.getExerciseName() == "bench press" and  top5 < 5: 
+            if cybant.customer.username in benchPressMasters:
+                pass
+            else:
+                benchPressMasters[cybant.customer.username]=cybant
+                 top5 += 1
+
+    squatMasters = {}
+    top5 = 0;
+    for cybant in bufor:
+        if cybant.getExerciseName() == "squat" and  top5 < 5: 
+            if cybant.customer.username in squatMasters:
+                pass
+            else:
+                squatMasters[cybant.customer.username]=cybant
+                 top5 += 1
+
+    deadLiftMasters = {}
+    top5 = 0;
+    for cybant in bufor:
+        if cybant.getExerciseName() == "dead lift" and  top5 < 5: 
+            if cybant.customer.username in deadLiftMasters:
+                pass
+            else:
+                deadLiftMasters[cybant.customer.username]=cybant
+                 top5 += 1
+
+
+  
+    context ={'benchPressMasters' :benchPressMasters.values() , 'squatMasters' :squatMasters.values() , 'deadLiftMasters' :deadLiftMasters.values()}    
+    return render(request, 'Workout/rankings.html', context)

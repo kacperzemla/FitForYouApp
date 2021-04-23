@@ -16,7 +16,7 @@
 <style>
     .hello-msg {
         font-size: 18px;
-        color: white;
+        color: white;  
         margin-right: 20px;
     }
 
@@ -312,57 +312,26 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container mx-auto">
-        <a class="navbar-brand" href="#">FitForYou</a>
+        <a class="navbar-brand" href="{% url 'main' %}">FitForYou</a>
 
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto justify-content-center">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">O nas</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Przydatne Linki
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Dieta</a>
-                        <a class="dropdown-item" href="#">Trening</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
-            </ul>
+           
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="{% url 'profile' %}"><i class="fa fa-fw fa-user"></i>&nbsp;Profile
+                <a class="nav-item nav-link" href="{% url 'training' %}"><i class="fas fa-dumbbell"></i>&nbsp;Training</a>
+                <a class="nav-item nav-link" href="{% url 'exercises'%}"><i class="fas fa-running"></i>&nbsp;Exercises</a>
+                <a class="nav-item nav-link" href="{% url 'diet' %}"><i class="fas fa-utensils"></i>&nbsp;Diet</a>
+                <a class="nav-item nav-link active" href="{% url 'calculator'%}"><i class="fas fa-calculator"></i>&nbsp;Calculator</a>
+                <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="{% url 'rankings'%}"><i class="fas fa-trophy"></i>&nbsp;Rankings</a>
+
+            </div>
+
         </div>
     </div>
     <span class="hello-msg">Hello, {{request.user}}</span>
-    <span><a class="hello-msg" href="{% url 'logout' %}"">Logout</a></span>
-</nav>
-
-<nav class=" navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="nav-item nav-link active" href="{% url 'profile' %}"><i
-                                class="fa fa-fw fa-user"></i>&nbsp;Mój profil
-                            <span class="sr-only">(current)</span></a>
-                        <a class="nav-item nav-link" href="{% url 'training' %}"><i
-                                class="fas fa-dumbbell"></i>&nbsp;Trening</a>
-                        <a class="nav-item nav-link" href="{% url 'diet' %}"><i
-                                class="fas fa-utensils"></i>&nbsp;Dieta</a>
-                        <a class="nav-item nav-link" href="{% url 'diet' %}"><i
-                                class="fas fa-utensils"></i>&nbsp;Calculator</a>
-                        <a class="nav-item nav-link disabled" href="#">Disabled</a>
-                    </div>
-                </div>
-            </div>
+    <span><a class="nav-item nav-link" href="{% url 'logout' %}"">Logout</a></span>
 </nav>
 
 <div class="container text-center " style="margin-top: 15px;">

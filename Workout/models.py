@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class Customer(models.Model):
     # on_delete= models.CASCADE jezeli usuniemy uzytkownika tego glownego to to powiazanie tez zostanie usuniete
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    username = models.CharField(max_length=50, null=True)
     name = models.CharField(max_length=50, null=True)
     surname = models.CharField(max_length=50, null=True)
     email = models.CharField(max_length=50, null=True)
@@ -12,6 +13,8 @@ class Customer(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     weight = models.IntegerField(null=True)
     height = models.IntegerField(null=True)
+    def __str__(self):
+        return self.username
 
 
 class Equipment(models.Model):
@@ -51,6 +54,12 @@ class Training(models.Model):
     weigth = models.IntegerField(null=True)
     sesion = models.IntegerField(null=True)
     reps = models.IntegerField(null=True)
+
+    def getExerciseName(self):
+        return self.exercise.name
+
+    def getCustumerUsername(self):
+        return self.customer.username
 
 
 class Meal(models.Model):
