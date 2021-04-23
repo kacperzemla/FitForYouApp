@@ -271,8 +271,7 @@ def rankings(request):
                 pass
             else:
                 benchPressMasters[cybant.customer.username]=cybant
-                 top5 += 1
-
+                top5 += 1
     squatMasters = {}
     top5 = 0;
     for cybant in bufor:
@@ -281,8 +280,7 @@ def rankings(request):
                 pass
             else:
                 squatMasters[cybant.customer.username]=cybant
-                 top5 += 1
-
+                top5 += 1
     deadLiftMasters = {}
     top5 = 0;
     for cybant in bufor:
@@ -291,7 +289,7 @@ def rankings(request):
                 pass
             else:
                 deadLiftMasters[cybant.customer.username]=cybant
-                 top5 += 1
+                top5 += 1
 
 
   

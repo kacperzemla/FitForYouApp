@@ -338,33 +338,89 @@
 <div class="container text-center " style="margin-top: 15px;">
     <div class="row ">
         <div class="col-12 mx-auto">
-            <div class="card-header">
-                Training
-            </div>
-            <div class="card-body">
-            
+            <div class="card">
+                <div class="card-header">
+                    Bench Press
+                </div>
+                <div class="card-body">
+                
 
-                <table class="table">
-                    <tr>
-                        <th> customer </th>
-                        <th> date </th>
-                        <th> exercise </th>
-                        <th> category </th>
-                        <th> weight </th>
-                       
-                    </tr>
-
-                    {% for i in benchPressMasters%}
+                    <table class="table">
                         <tr>
-                            <td>{{i.customer.username}}</td>
-                            <td>{{i.date}}</td>
-                            <td>{{i.exercise}}</td>
-                            <td>{{i.exercise.category}}</td>
-                            <td>{{i.weigth}}</td>
+                            <th> No </th>
+                            <th> customer </th>
+                            <th> weight </th>
+                            <th> date </th>
+                        
                         </tr>
 
-                    {% endfor %}
-                </table>
+                        {% for i in benchPressMasters%}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.customer.username}}</td>
+                                <td>{{i.weigth}}</td>
+                                <td>{{i.date}}</td>
+                            </tr>
+
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    Dead lift
+                </div>
+                <div class="card-body">
+                
+
+                    <table class="table">
+                        <tr>
+                            <th> No </th>
+                            <th> customer </th>
+                            <th> weight </th>
+                            <th> date </th>
+                        
+                        </tr>
+
+                        {% for i in deadLiftMasters%}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.customer.username}}</td>
+                                <td>{{i.weigth}}</td>
+                                <td>{{i.date}}</td>
+                            </tr>
+
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    Squat
+                </div>
+                <div class="card-body">
+                
+
+                    <table class="table">
+                        <tr>
+                            <th> No </th>
+                            <th> customer </th>
+                            <th> weight </th>
+                            <th> date </th>
+                        
+                        </tr>
+
+                        {% for i in squatMasters%}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.customer.username}}</td>
+                                <td>{{i.weigth}}</td>
+                                <td>{{i.date}}</td>
+                            </tr>
+
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
         </div>
     </div>
