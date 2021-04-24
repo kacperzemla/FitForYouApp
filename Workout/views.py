@@ -263,7 +263,29 @@ def exercises(request):
  
 
 def friends(request):
-    context = {}
+
+    customers = Customer.objects.all()
+    relations = Relations.objects.all()
+    loggredUsername = request.user.username
+    newFriends = []
+    actualFriends = []
+    invitations = []
+
+    thisUser = customers.filter(username=loggredUsername)
+
+    for cybant in relations:
+        if cybant.receiver.username == loggredUsername:
+            if cybant.status == "friends":
+                actualFriends.append(cybant.sender)
+            elif cybant.status == "invite":
+                invitations.append(cybant.sender)
+    
+    usedCustomers = set(actualFriends + invitations)
+    customers = set(customers)
+    newFriends = list(customers - usedCustomers)
+    newFriends.remove(thisUser[0])
+   
+    context = {'actualFriends':actualFriends , 'invitations':invitations , 'newFriends':newFriends}
     return render(request, 'Workout/friends.html',context)
 
 def rankings(request):

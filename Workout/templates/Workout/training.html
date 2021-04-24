@@ -35,7 +35,6 @@
                 <a class="nav-item nav-link" href="{% url 'diet' %}"><i class="fas fa-utensils"></i>&nbsp;Diet</a>
                 <a class="nav-item nav-link" href="{% url 'calculator'%}"><i class="fas fa-calculator"></i>&nbsp;Calculator</a>
                 <a class="nav-item nav-link" href="{% url 'rankings'%}"><i class="fas fa-trophy"></i>&nbsp;Rankings</a>
-                <a class="btn btn-primary" href="{% url 'createTraning' user.id%}"> Add new Traning</a>
                 <a class="nav-item nav-link" href="{% url 'friends'%}"><i class="fas fa-users"></i>&nbsp;Friends</a>
 
             </div>
@@ -47,6 +46,7 @@
     
 
 </nav>
+<a class="btn btn-primary" href="{% url 'createTraning' user.id%}"> Add new Traning</a>
 
 <div class="container">
     <div class="row">

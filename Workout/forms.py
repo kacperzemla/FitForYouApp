@@ -13,6 +13,11 @@ class TrainingForm(ModelForm):
       fields = ['exercise','weigth','sesion','reps']
 
 
+class InvitationForm(ModelForm):
+   class meta:
+      model = Relations
+      fields = [all]
+
 class ExerciseForm(ModelForm):
    class Meta:
       model = Exercises

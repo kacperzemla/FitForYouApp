@@ -45,4 +45,87 @@
     <span><a class="nav-item nav-link" href="{% url 'logout' %}"">Logout</a></span>
 </nav>
 
-JEBAC STRAJK KOBIET
+<div class="container text-center">
+    <div class="row ">
+        <div class="col-4 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    Friends
+                </div>
+                <div class="card-body">
+            
+                    <table class="table">
+                        <tr>
+                            <th> username </th>
+                            <th> profile </th>
+                        </tr>
+
+                        {% for i in actualFriends%}
+                            <tr>
+                                <td>{{i.username}}</td>
+                                <td> <a class="btn btn-sm btn-info" href="{% url 'updateTraining' i.id%}">PROFILE</a> </td>
+                            </tr>
+
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+        <div class="col-4 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    Invitations
+                </div>
+                <div class="card-body">
+            
+                    <table class="table">
+                        <tr>
+                            <th> username </th>
+                            <th> confirm </th>
+                            <th> decline </th>
+                        </tr>
+
+                        {% for i in invitations%}
+                            <tr>
+                                <td>{{i.username}}</td>
+                                <td> <a class="btn btn-sm btn-info" href="{% url 'updateTraining' i.id%}">UPDATE</a> </td>
+                                <td> <a class="btn btn-sm btn-info" href="{% url 'updateTraining' i.id%}">UPDATE</a> </td>
+                            </tr>
+
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    Add new friends
+                </div>
+                <div class="card-body">
+            
+                    <table class="table">
+                        <tr>
+                            <th> username </th>
+                            <th> add </th>
+                        </tr>
+
+                        {% for i in newFriends%}
+                            <tr>
+                                <td>{{i.username}}</td>
+                                <td> <a class="btn btn-sm btn-info" href="{% url 'updateTraining' i.id%}">UPDATE</a> </td>
+
+                            </tr>
+
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+      
