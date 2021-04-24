@@ -270,6 +270,7 @@ def friends(request):
     newFriends = []
     actualFriends = []
     invitations = []
+    blockedAndDeclined = []
 
     thisUser = customers.filter(username=loggredUsername)
 
@@ -279,14 +280,65 @@ def friends(request):
                 actualFriends.append(cybant.sender)
             elif cybant.status == "invite":
                 invitations.append(cybant.sender)
+            else:
+                blockedAndDeclined.append(cybant.sender)
     
-    usedCustomers = set(actualFriends + invitations)
+    usedCustomers = set(actualFriends + invitations + blockedAndDeclined)
     customers = set(customers)
     newFriends = list(customers - usedCustomers)
     newFriends.remove(thisUser[0])
    
     context = {'actualFriends':actualFriends , 'invitations':invitations , 'newFriends':newFriends}
     return render(request, 'Workout/friends.html',context)
+
+def friendProfile(request, pk):
+    friend = Customer.objects.get(id=pk)
+    username = friend.username
+    name = friend.name
+    email = friend.email
+    phone = friend.number
+    height = friend.height
+    weight = friend.weight
+
+    print(friend)
+
+    training = Training.objects.all()
+    training = training.filter(customer = friend)
+
+    print(training)
+
+    context = {'name': name, 'email': email,
+               'phone': phone, 'height': height, 'weight': weight, 'username':username,
+               'training':training}
+    return render(request, 'Workout/friendProfile.html', context)
+
+def friendBlock(request,pk):
+    customers = Customer.objects.all()
+    friend = Customer.objects.get(id=pk)
+    loggedUsername = request.user.username
+    thisUser = customers.filter(username=loggedUsername)
+    relations = Relations.objects.all()
+
+    for buffor in relations:
+        if  buffor.receiver == thisUser[0] and buffor.sender == friend:
+            firstToBlock = buffor
+        elif buffor.receiver == friend and buffor.sender ==  thisUser[0]:   
+            secondToBlock = buffor
+
+    print(firstToBlock)
+    print(secondToBlock)
+
+    if request.method == "POST":
+        firstToBlock.blockRelations()
+        secondToBlock.blockRelations()
+        firstToBlock.save()
+        secondToBlock.save()
+        return redirect('friends')
+
+    
+    context = {'friend':friend}
+    return render(request, 'Workout/friendBlock.html', context)
+
 
 def rankings(request):
     bufor = Training.objects.filter().order_by('-weigth')

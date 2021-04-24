@@ -5,15 +5,13 @@ from django import forms
 from django.utils.translation import gettext as _
 from .models import *
 
-
-
 class TrainingForm(ModelForm):
    class Meta:
       model = Training
       fields = ['exercise','weigth','sesion','reps']
 
 
-class InvitationForm(ModelForm):
+class RelationsForm(ModelForm):
    class meta:
       model = Relations
       fields = [all]

@@ -20,4 +20,7 @@ urlpatterns = [
     path('calculator',views.calculator, name='calculator'),
     path('rankings',views.rankings, name='rankings'),
     path('friends',views.friends, name='friends'),
+    path('friendProfile/<str:pk>',views.friendProfile, name='friendProfile'),
+    path('friendBlock/<str:pk>',views.friendBlock, name='friendBlock'),
+
 ]

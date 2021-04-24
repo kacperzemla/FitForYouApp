@@ -55,6 +55,9 @@ class Training(models.Model):
     sesion = models.IntegerField(null=True)
     reps = models.IntegerField(null=True)
 
+    def getCustumerId(sef):
+        return self.customer.id
+
     def getExerciseName(self):
         return self.exercise.name
 
@@ -87,3 +90,6 @@ class Relations(models.Model):
     status = models.CharField(max_length=50, null=True , choices=STATUS)
     sender =  models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL , related_name="sender")
     receiver =  models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL , related_name="receiver")
+
+    def blockRelations(self):
+        self.status = "blocked"

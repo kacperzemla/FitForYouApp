@@ -58,12 +58,14 @@
                         <tr>
                             <th> username </th>
                             <th> profile </th>
+                            <th> block </th>
                         </tr>
 
                         {% for i in actualFriends%}
                             <tr>
                                 <td>{{i.username}}</td>
-                                <td> <a class="btn btn-sm btn-info" href="{% url 'updateTraining' i.id%}">PROFILE</a> </td>
+                                <td> <a class="btn btn-sm btn-info" href="{% url 'friendProfile' i.id%}">PROFILE</a> </td>
+                                <td> <a class="btn btn-sm btn-danger" href="{% url 'friendBlock' i.id%}">BLOCK</a> </td>
                             </tr>
 
                         {% endfor %}
@@ -89,8 +91,8 @@
                         {% for i in invitations%}
                             <tr>
                                 <td>{{i.username}}</td>
-                                <td> <a class="btn btn-sm btn-info" href="{% url 'updateTraining' i.id%}">UPDATE</a> </td>
-                                <td> <a class="btn btn-sm btn-info" href="{% url 'updateTraining' i.id%}">UPDATE</a> </td>
+                                <td> <a class="btn btn-sm btn-info" href="{% url 'updateTraining' i.id%}">CONFIRM</a> </td>
+                                <td> <a class="btn btn-sm btn-info" href="{% url 'updateTraining' i.id%}">DECLINE</a> </td>
                             </tr>
 
                         {% endfor %}
@@ -102,20 +104,20 @@
         <div class="col-4 mx-auto">
             <div class="card">
                 <div class="card-header">
-                    Add new friends
+                    Invite new friends
                 </div>
                 <div class="card-body">
             
                     <table class="table">
                         <tr>
                             <th> username </th>
-                            <th> add </th>
+                            <th> invite </th>
                         </tr>
 
                         {% for i in newFriends%}
                             <tr>
                                 <td>{{i.username}}</td>
-                                <td> <a class="btn btn-sm btn-info" href="{% url 'updateTraining' i.id%}">UPDATE</a> </td>
+                                <td> <a class="btn btn-sm btn-info" href="{% url 'updateTraining' i.id%}">INVITE</a> </td>
 
                             </tr>
 
