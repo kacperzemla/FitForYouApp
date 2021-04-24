@@ -63,8 +63,7 @@ class Training(models.Model):
 
 
 class Meal(models.Model):
-    customer = models.ForeignKey(
-        Customer, null=True, on_delete=models.SET_NULL)
+    customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=50, null=True)
     carbs = models.IntegerField(null=True)
     fats = models.IntegerField(null=True)
@@ -75,3 +74,16 @@ class Meal(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Relations(models.Model):
+    STATUS = (
+        ('invite' , 'invite'),
+        ('friends' , 'friends'),
+        ('blocked' , 'blocked'),
+        ('declined' , 'declined'),
+    )
+
+    status = models.CharField(max_length=50, null=True , choices=STATUS)
+    sender =  models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL , related_name="sender")
+    receiver =  models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL , related_name="receiver")

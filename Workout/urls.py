@@ -19,5 +19,5 @@ urlpatterns = [
     path('deleteMeal/<str:pk>',views.deleteMeal, name='deleteMeal'),
     path('calculator',views.calculator, name='calculator'),
     path('rankings',views.rankings, name='rankings'),
-
+    path('friends',views.friends, name='friends'),
 ]

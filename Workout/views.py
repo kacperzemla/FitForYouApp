@@ -261,6 +261,11 @@ def exercises(request):
     context = {'chest':chest,'legs':legs,'back':back,'abs_':abs_,'shoulders':shoulders,'bic_tric':bic_tric,'cardio':cardio,'booty':booty}
     return render(request, 'Workout/exercises.html', context)
  
+
+def friends(request):
+    context = {}
+    return render(request, 'Workout/friends.html',context)
+
 def rankings(request):
     bufor = Training.objects.filter().order_by('-weigth')
     benchPressMasters = {}
@@ -291,7 +296,5 @@ def rankings(request):
                 deadLiftMasters[cybant.customer.username]=cybant
                 top5 += 1
 
-
-  
     context ={'benchPressMasters' :benchPressMasters.values() , 'squatMasters' :squatMasters.values() , 'deadLiftMasters' :deadLiftMasters.values()}    
     return render(request, 'Workout/rankings.html', context)

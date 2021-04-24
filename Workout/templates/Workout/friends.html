@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://kit.fontawesome.com/b3e438769b.js" crossorigin="anonymous"></script>
 <style>
-    .hello-msg{
+    .hello-msg {
         font-size: 18px;
         color: white;
         margin-right: 20px;
@@ -28,13 +28,13 @@
            
             <div class="navbar-nav">
                 <a class="nav-item nav-link" href="{% url 'profile' %}"><i class="fa fa-fw fa-user"></i>&nbsp;Profile
-                    <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" href="{% url 'training' %}"><i class="fas fa-dumbbell"></i>&nbsp;Training</a>
                 <a class="nav-item nav-link" href="{% url 'exercises'%}"><i class="fas fa-running"></i>&nbsp;Exercises</a>
-                <a class="nav-item nav-link active" href="{% url 'diet' %}"><i class="fas fa-utensils"></i>&nbsp;Diet</a>
+                <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="{% url 'diet' %}"><i class="fas fa-utensils"></i>&nbsp;Diet</a>
                 <a class="nav-item nav-link" href="{% url 'calculator'%}"><i class="fas fa-calculator"></i>&nbsp;Calculator</a>
                 <a class="nav-item nav-link" href="{% url 'rankings'%}"><i class="fas fa-trophy"></i>&nbsp;Rankings</a>
-                <a class="nav-item nav-link" href="{% url 'friends'%}"><i class="fas fa-users"></i>&nbsp;Friends</a>
+                <a class="nav-item nav-link active" href="{% url 'friends'%}"><i class="fas fa-users"></i>&nbsp;Friends</a>
 
 
             </div>
@@ -45,23 +45,4 @@
     <span><a class="nav-item nav-link" href="{% url 'logout' %}"">Logout</a></span>
 </nav>
 
-
-<br>
-<div class="row">
-    <div class="col-md-6">
-        <div class="card card-body">
-
-
-            <p> Are you sure you want to deletev "{{meal}}" ?</p>
-
-            <form method="POST">
-                {% csrf_token %}
-                <a href = "{% url 'diet' %}">CANCEL</a>
-
-                <input type="submit" name="Confirm">
-
-            </form>
-
-        </div>
-    </div>
-</div>
+JEBAC STRAJK KOBIET
