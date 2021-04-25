@@ -4,6 +4,7 @@ from . import templates
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from .forms import CreateUserForm
+from .filters import FriendFilter
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -267,38 +268,50 @@ def friends(request):
     customers = Customer.objects.all()
     relations = Relations.objects.all()
     loggredUsername = request.user.username
-    newFriends = []
     actualFriends = []
     invitations = []
     blockedUsers = []
     myInvitations = []
     userToPossibileUnblock = []
-
+    usedId = []
+    everyId = []
     thisUser = customers.filter(username=loggredUsername)
+    usedId.append(thisUser[0].id)
+
+    for cybant in customers:
+        everyId.append(cybant.id)
 
     for cybant in relations:
         if cybant.receiver.username == loggredUsername:
             if cybant.status == "friends":
                 actualFriends.append(cybant.sender)
+                usedId.append(cybant.sender.id)
             elif cybant.status == "blocked":
                 blockedUsers.append(cybant.sender)
+                usedId.append(cybant.sender.id)
             elif cybant.status == "invite":
                 invitations.append(cybant.sender)
+                usedId.append(cybant.sender.id)
         
         elif cybant.sender.username == loggredUsername:
             if cybant.status == "invite":
                 blockedUsers.append(cybant.receiver)
+                usedId.append(cybant.receiver.id)
             elif cybant.status == "declined":
                 blockedUsers.append(cybant.receiver)
+                usedId.append(cybant.receiver.id)
             elif cybant.status == "blocked":
                 userToPossibileUnblock.append(cybant.receiver)
+                usedId.append(cybant.receiver.id)
     
-    usedCustomers = set(actualFriends + invitations + blockedUsers)
-    customers = set(customers)
-    newFriends = list(customers - usedCustomers)
-    newFriends.remove(thisUser[0])
-   
-    context = {'actualFriends':actualFriends , 'invitations':invitations , 'newFriends':newFriends , 'userToPossibileUnblock' : userToPossibileUnblock}
+
+    idNewFriends = list(set(everyId) - set(usedId))
+    newFriends = Customer.objects.filter(id__in=idNewFriends)
+
+    myFilter = FriendFilter(request.GET, queryset=newFriends)
+    newFriends = myFilter.qs
+
+    context = {'actualFriends':actualFriends , 'invitations':invitations , 'newFriends':newFriends , 'userToPossibileUnblock' : userToPossibileUnblock , 'myFilter':myFilter}
     return render(request, 'Workout/friends.html',context)
 
 def friendProfile(request, pk):
