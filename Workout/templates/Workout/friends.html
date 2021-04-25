@@ -91,14 +91,38 @@
                         {% for i in invitations%}
                             <tr>
                                 <td>{{i.username}}</td>
-                                <td> <a class="btn btn-sm btn-info" href="{% url 'updateTraining' i.id%}">CONFIRM</a> </td>
-                                <td> <a class="btn btn-sm btn-info" href="{% url 'updateTraining' i.id%}">DECLINE</a> </td>
+                                <td> <a class="btn btn-sm btn-info" href="{% url 'friendConfirm' i.id%}">CONFIRM</a> </td>
+                                <td> <a class="btn btn-sm btn-info" href="{% url 'friendDecline' i.id%}">DECLINE</a> </td>
                             </tr>
 
                         {% endfor %}
                     </table>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-header">
+                    BLOCKED
+                </div>
+                <div class="card-body">
+            
+                    <table class="table">
+                        <tr>
+                            <th> username </th>
+                            <th> unblocked </th>
+                        </tr>
+
+                        {% for i in userToPossibileUnblock%}
+                            <tr>
+                                <td>{{i.username}}</td>
+                                <td> <a class="btn btn-sm btn-info" href="{% url 'friendUnblock' i.id%}">UNBLOCK</a> </td>
+                            </tr>
+
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+
         </div>
 
         <div class="col-4 mx-auto">
@@ -117,7 +141,7 @@
                         {% for i in newFriends%}
                             <tr>
                                 <td>{{i.username}}</td>
-                                <td> <a class="btn btn-sm btn-info" href="{% url 'updateTraining' i.id%}">INVITE</a> </td>
+                                <td> <a class="btn btn-sm btn-info" href="{% url 'friendInvite' i.id%}">INVITE</a> </td>
 
                             </tr>
 

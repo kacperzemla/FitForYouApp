@@ -85,11 +85,29 @@ class Relations(models.Model):
         ('friends' , 'friends'),
         ('blocked' , 'blocked'),
         ('declined' , 'declined'),
+        ('banned' , 'banned')
     )
 
     status = models.CharField(max_length=50, null=True , choices=STATUS)
     sender =  models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL , related_name="sender")
     receiver =  models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL , related_name="receiver")
 
+    @classmethod
+    def create(cls, status,receiver,sender):
+        newRelation = cls(status=status , receiver= receiver , sender= sender)
+        return newRelation
+
+    def makeFriendAgain(self):
+        self.status = "friends"
+
     def blockRelations(self):
         self.status = "blocked"
+
+    def banRelations(self):
+        self.status = "banned"
+
+    def declineRelations(self):
+        self.status = "declined"
+
+    def confirmRelations(self):
+        self.status = "friends"

@@ -22,5 +22,8 @@ urlpatterns = [
     path('friends',views.friends, name='friends'),
     path('friendProfile/<str:pk>',views.friendProfile, name='friendProfile'),
     path('friendBlock/<str:pk>',views.friendBlock, name='friendBlock'),
-
+    path('friendDecline/<str:pk>',views.friendDecline, name='friendDecline'),
+    path('friendConfirm/<str:pk>',views.friendConfirm, name='friendConfirm'),
+    path('friendInvite/<str:pk>',views.friendInvite, name='friendInvite'),
+    path('friendUnblock/<str:pk>',views.friendUnblock, name='friendUnblock'),
 ]
