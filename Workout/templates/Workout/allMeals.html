@@ -1,0 +1,137 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/b3e438769b.js" crossorigin="anonymous"></script>
+<style>
+    .hello-msg {
+        font-size: 18px;
+        color: white;
+        margin-right: 20px;
+    }
+    .mytable {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        width: 100%;
+        border-radius: 5px 5px 0 0;
+        overflow: hidden;
+    }
+
+    .mytable thead tr {
+        background-color: #3542b8;
+        background-image: linear-gradient(315deg, #3542b8 0%, #5aa6ee 74%);
+        color: #ffffff;
+        text-align: left;
+        text-transform: uppercase;
+    }
+    .mytable thead tr:nth-of-type(2){
+        border-right: 2px solid #5aa6ee;
+        
+    }
+
+    .mytable th,
+    .mytable td {
+        padding: 12px 15px;
+        font-weight: bold;
+    }
+    .mytable tbody{
+        border-right: 2px solid #5aa6ee;
+        border-left: 2px solid #5aa6ee
+    }
+    .mytable tbody tr {
+        border-bottom: 1px solid #dddddd;
+
+    }
+
+    .mytable tbody tr:last-of-type {
+        border-bottom: 2px solid #5aa6ee;
+    }
+
+    .mytable thead tr:first-of-type {
+        text-align: center;
+        border-bottom: 2px solid #5aa6ee;
+        background-color: rgb(49, 87, 214);
+    }
+</style>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container mx-auto">
+        <a class="navbar-brand" href="{% url 'main' %}">FitForYou</a>
+
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="{% url 'profile' %}"><i class="fa fa-fw fa-user"></i>&nbsp;Profile
+                    <a class="nav-item nav-link active" href="{% url 'training' %}"><i
+                            class="fas fa-dumbbell"></i>&nbsp;Training</a>
+                    <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="{% url 'exercises'%}"><i
+                        class="fas fa-running"></i>&nbsp;Exercises</a>
+                <a class="nav-item nav-link" href="{% url 'diet' %}"><i class="fas fa-utensils"></i>&nbsp;Diet</a>
+                <a class="nav-item nav-link" href="{% url 'calculator'%}"><i
+                        class="fas fa-calculator"></i>&nbsp;Calculator</a>
+                <a class="nav-item nav-link" href="{% url 'rankings'%}"><i class="fas fa-trophy"></i>&nbsp;Rankings</a>
+               
+                <a class="nav-item nav-link" href="{% url 'friends'%}"><i class="fas fa-users"></i>&nbsp;Friends</a>
+
+            </div>
+
+        </div>
+    </div>
+    <span class="hello-msg">Hello, {{request.user}}</span>
+    <span><a class="nav-item nav-link" href="{% url 'logout' %}"">Logout</a></span>
+    
+
+</nav>
+
+<div class=" container text-center " style=" margin-top: 15px;">
+    <div class="row ">
+        <div class="col-12 mx-auto">
+            <table class="mytable">
+                <thead>
+                    <tr>
+                        <td colspan="9">Your diet</td>
+                    </tr>
+                    <tr>
+                        <th> name </th>
+                        <th> day </th>
+                        <th>date</th>
+                        <th>fats</th>
+                        <th>proteins</th>
+                        <th> carbs </th>
+                        <th> kcal</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in meals%}
+                    <tr>
+
+                        <td>{{i.name}}</td>
+                        <td>{{i.date| date:"l"}}</td>
+                        <td>{{i.date}}</td>
+                        <td>{{i.fats}}</td>
+                        <td>{{i.proteins}}</td>
+                        <td>{{i.carbs}}</td>
+                        <td>{{ i.kcal}}</td>
+                        <td> <a class="btn btn-sm btn-danger" href="{% url 'deleteMeal' i.id%}">DELETE</a> </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -28,4 +28,6 @@ urlpatterns = [
     path('friendUnblock/<str:pk>',views.friendUnblock, name='friendUnblock'),
     path('messagesS',views.messagesS, name='messagesS'),
 
+    path('allTrainings',views.allTrainings, name='allTrainings'),
+    path('allMeals', views.allMeals, name='allMeals'),
 ]
