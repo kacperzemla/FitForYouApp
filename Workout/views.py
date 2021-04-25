@@ -442,11 +442,8 @@ def friendInvite(request , pk):
     context = {'friendToInvite':friendToInvite}
     return render(request, 'Workout/friendInvite.html', context)
 
-def messages(request):
-    context = {}
-    return render(request, 'Workout/messages.html', context)
-
 def rankings(request):
+
     bufor = Training.objects.filter().order_by('-weigth')
     benchPressMasters = {}
     top5 = 0;
@@ -478,3 +475,7 @@ def rankings(request):
 
     context ={'benchPressMasters' :benchPressMasters.values() , 'squatMasters' :squatMasters.values() , 'deadLiftMasters' :deadLiftMasters.values()}    
     return render(request, 'Workout/rankings.html', context)
+
+def messages(request):
+    context ={}
+    return render(request, 'Workout/messages.html', context)
