@@ -476,6 +476,6 @@ def rankings(request):
     context ={'benchPressMasters' :benchPressMasters.values() , 'squatMasters' :squatMasters.values() , 'deadLiftMasters' :deadLiftMasters.values()}    
     return render(request, 'Workout/rankings.html', context)
 
-def messages(request):
+def messagesS(request):
     context ={}
-    return render(request, 'Workout/messages.html', context)
+    return render(request, 'Workout/messagesS.html', context)

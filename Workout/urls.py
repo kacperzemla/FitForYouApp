@@ -26,6 +26,6 @@ urlpatterns = [
     path('friendConfirm/<str:pk>',views.friendConfirm, name='friendConfirm'),
     path('friendInvite/<str:pk>',views.friendInvite, name='friendInvite'),
     path('friendUnblock/<str:pk>',views.friendUnblock, name='friendUnblock'),
-    path('messages',views.messages, name='messages'),
+    path('messagesS',views.messagesS, name='messagesS'),
 
 ]
