@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user
-from .forms import TrainingForm, CustomerForm, ExerciseForm
+from .forms import TrainingForm, CustomerForm, ExerciseForm , DialogueForm
 from django.forms import inlineformset_factory
 from django.forms import inlineformset_factory  # kilka form naraz
 from datetime import timedelta
@@ -518,11 +518,33 @@ def rankings(request):
     context ={'benchPressMasters' :benchPressMasters.values() , 'squatMasters' :squatMasters.values() , 'deadLiftMasters' :deadLiftMasters.values()}    
     return render(request, 'Workout/rankings.html', context)
 
-def messagesS(request):
-    context ={}
+def messagesS(request , pk):
+    customers = Customer.objects.all()
+    friend = Customer.objects.get(id=pk)
+    loggedUsername = request.user.username
+    thisUser = customers.filter(username=loggedUsername)
+    dialogues = Dialogues.objects.all()
+    listOfText = []
+    form  = DialogueForm()
+
+    if request.method == "POST":
+        form = DialogueForm(request.POST)
+        form.receiver = friend
+        form.sender= thisUser[0]
+        if form.is_valid():
+            form.save()
+        return redirect('friends')
+
+    for cybant in dialogues:
+        if (cybant.sender == thisUser[0] and cybant.receiver == friend) or(cybant.sender == friend and cybant.receiver == thisUser[0]):
+            listOfText.append(cybant.id)
+
+    myText = Dialogues.objects.filter(id__in=listOfText)
+
+    context ={'myText':myText.order_by('-id') , 'form':form}
     return render(request, 'Workout/messagesS.html', context)
-    context ={'benchPressMasters' :benchPressMasters.values() , 'squatMasters' :squatMasters.values() , 'deadLiftMasters' :deadLiftMasters.values()}
-    return render(request, 'Workout/rankings.html', context)
+    
+
 
 def allMeals(request):
     meals = request.user.customer.meal_set.all()

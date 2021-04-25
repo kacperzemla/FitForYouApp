@@ -35,3 +35,7 @@ class CustomerForm(ModelForm):
       exclude = ['user'] #wyrzucamy z pol usera bo przeciez tego sie nie da zmienic
 
 
+class DialogueForm(ModelForm):
+   class Meta:
+      model = Dialogues
+      fields = ['text']

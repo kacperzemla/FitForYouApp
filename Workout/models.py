@@ -78,6 +78,11 @@ class Meal(models.Model):
     def __str__(self):
         return self.name
 
+class Dialogues(models.Model):
+    date = models.DateTimeField(auto_now_add=True, null=True)
+    sender =  models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL , related_name="senderText")
+    receiver =  models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL , related_name="receiverText")
+    text = models.CharField(max_length=200, null=True)
 
 class Relations(models.Model):
     STATUS = (

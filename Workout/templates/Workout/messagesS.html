@@ -61,8 +61,43 @@
     <span><a class="nav-item nav-link" href="{% url 'logout' %}"">Logout</a></span>
 </nav>
 
-<div class="row">
-    <div class="col-md-6">
-     JEBAĆ STRAJK KOBIET
+<form  method="POST">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" name="Submit">
+
+</form>
+
+<div class="container text-center">
+    <div class="row ">
+        <div class="col-9 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    MESSAGES
+                </div>
+                <div class="card-body">
+            
+                    <table class="table">
+                        <tr>
+                            <th> sender </th>
+                            <th> receiver </th>
+                            <th> text </th>
+                            <th> date </th>
+                        </tr>
+
+                        {% for i in myText%}
+                            <tr>
+                                <td>{{i.sender}}</td>
+                                <td>{{i.receiver}}</td>
+                                <td>{{i.text}}</td>
+                                <td>{{i.date}}</td>
+
+                            </tr>
+
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

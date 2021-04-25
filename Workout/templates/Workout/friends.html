@@ -47,7 +47,7 @@
 
 <div class="container text-center">
     <div class="row ">
-        <div class="col-4 mx-auto">
+        <div class="col-5 mx-auto">
             <div class="card">
                 <div class="card-header">
                     Friends
@@ -59,6 +59,7 @@
                             <th> username </th>
                             <th> profile </th>
                             <th> block </th>
+                            <th> message </th>
                         </tr>
 
                         {% for i in actualFriends%}
@@ -66,6 +67,7 @@
                                 <td>{{i.username}}</td>
                                 <td> <a class="btn btn-sm btn-info" href="{% url 'friendProfile' i.id%}">PROFILE</a> </td>
                                 <td> <a class="btn btn-sm btn-danger" href="{% url 'friendBlock' i.id%}">BLOCK</a> </td>
+                                <td> <a class="btn btn-sm btn-info" href="{% url 'messagesS' i.id%}">MESSAGE</a> </td>
                             </tr>
 
                         {% endfor %}
@@ -125,7 +127,7 @@
 
         </div>
 
-        <div class="col-4 mx-auto">
+        <div class="col-3 mx-auto">
             <div class="card">
                 <div class="card-header">
                     Invite new friends
