@@ -442,6 +442,10 @@ def friendInvite(request , pk):
     context = {'friendToInvite':friendToInvite}
     return render(request, 'Workout/friendInvite.html', context)
 
+def messages(request):
+    context = {}
+    return render(request, 'Workout/messages.html', context)
+
 def rankings(request):
     bufor = Training.objects.filter().order_by('-weigth')
     benchPressMasters = {}
