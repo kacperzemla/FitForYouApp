@@ -11,11 +11,81 @@
     crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://kit.fontawesome.com/b3e438769b.js" crossorigin="anonymous"></script>
+
 <style>
-    .hello-msg{
+    body{
+        background-color: #5ca0f2;
+background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
+
+    }
+    .hello-msg {
         font-size: 18px;
         color: white;
         margin-right: 20px;
+    }
+
+    .mybtn {
+        color: white;
+        background-color: #3542b8;
+        background-image: linear-gradient(315deg, #3542b8 0%, #5aa6ee 74%);
+        border: none;
+        padding: 13px;
+        border-radius: 10px;
+        transition: all .2s ease-in-out;
+        font-family: 'Sunflower', sans-serif;
+        text-transform: uppercase;
+    }
+
+    .mybtn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 6px -6px rgb(45, 118, 228);
+    }
+
+    .mytable {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        width: 100%;
+        border-radius: 5px 5px 0 0;
+        overflow: hidden;
+    }
+
+    .mytable thead tr {
+        background-color: #3542b8;
+        background-image: linear-gradient(315deg, #3542b8 0%, #5aa6ee 74%);
+        color: #ffffff;
+        text-align: left;
+        text-transform: uppercase;
+    }
+    .mytable thead tr:nth-of-type(2){
+        border-right: 2px solid #5aa6ee;
+        
+    }
+
+    .mytable th,
+    .mytable td {
+        padding: 12px 15px;
+        font-weight: bold;
+    }
+    .mytable tbody{
+        border-right: 2px solid #5aa6ee;
+        border-left: 2px solid #5aa6ee
+    }
+    .mytable tbody tr {
+        border-bottom: 1px solid #dddddd;
+
+    }
+
+    .mytable tbody tr:last-of-type {
+        border-bottom: 2px solid #5aa6ee;
+    }
+
+    .mytable thead tr:first-of-type {
+        text-align: center;
+        border-bottom: 2px solid #5aa6ee;
+        background-color: rgb(49, 87, 214);
     }
 </style>
 
@@ -26,16 +96,18 @@
 
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-           
+
             <div class="navbar-nav">
                 <a class="nav-item nav-link" href="{% url 'profile' %}"><i class="fa fa-fw fa-user"></i>&nbsp;Profile
-                <a class="nav-item nav-link active" href="{% url 'training' %}"><i class="fas fa-dumbbell"></i>&nbsp;Training</a>
-                <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="{% url 'exercises'%}"><i class="fas fa-running"></i>&nbsp;Exercises</a>
+                    <a class="nav-item nav-link active" href="{% url 'training' %}"><i
+                            class="fas fa-dumbbell"></i>&nbsp;Training</a>
+                    <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="{% url 'exercises'%}"><i
+                        class="fas fa-running"></i>&nbsp;Exercises</a>
                 <a class="nav-item nav-link" href="{% url 'diet' %}"><i class="fas fa-utensils"></i>&nbsp;Diet</a>
-                <a class="nav-item nav-link" href="{% url 'calculator'%}"><i class="fas fa-calculator"></i>&nbsp;Calculator</a>
+                <a class="nav-item nav-link" href="{% url 'calculator'%}"><i
+                        class="fas fa-calculator"></i>&nbsp;Calculator</a>
                 <a class="nav-item nav-link" href="{% url 'rankings'%}"><i class="fas fa-trophy"></i>&nbsp;Rankings</a>
-                <a class="btn btn-primary" href="{% url 'createTraning' user.id%}"> Add new Traning</a>
                 <a class="nav-item nav-link" href="{% url 'friends'%}"><i class="fas fa-users"></i>&nbsp;Friends</a>
 
             </div>
@@ -44,52 +116,110 @@
     </div>
     <span class="hello-msg">Hello, {{request.user}}</span>
     <span><a class="nav-item nav-link" href="{% url 'logout' %}"">Logout</a></span>
-    
+
 
 </nav>
 
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    Training
-                </div>
-                <div class="card-body">
-                
+<div class=" text-center" style="margin-top: 15px;">
+            <label class="btn">
+                <a class="btn btn-primary mybtn" href="{% url 'createTraning' user.id%}"> Add new Traning</a>
+            </label>
+            <label class="btn">
+                <a class="btn btn-primary mybtn" href="{% url 'allTrainings' %}" style="color: white;">VIEW ALL
+                    TRAININGS</a>
+            </label>
+            </div>
 
-                    <table class="table">
-                        <tr>
-                            <th> date </th>
-                            <th> exercise </th>
-                            <th> category </th>
-                            <th> weight </th>
-                            <th> sesion </th>
-                            <th> reps </th>
-                            <th> delete </th>
-                            <th> update </th>
-                        </tr>
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col-12">
 
-                        {% for i in traning%}
-                            <tr>
-                                <td>{{i.date}}</td>
-                                <td>{{i.exercise}}</td>
-                                <td>{{i.exercise.category}}</td>
-                                <td>{{i.weigth}}</td>
-                                <td>{{i.sesion}}</td>
-                                <td>{{i.reps}}</td> 
-                                <td> <a class="btn btn-sm btn-info" href="{% url 'updateTraining' i.id%}">UPDATE</a> </td>
-                                <td> <a class="btn btn-sm btn-danger" href="{% url 'deleteTraining' i.id%}">DELETE</a> </td>
 
-                            </tr>
 
-                        {% endfor %}
-                    </table>
+
+
+                        <table class="mytable">
+                            <thead>
+                                <tr>
+                                    <td colspan="9">This Week</td>
+                                </tr>
+                                <tr>
+                                    <th> date </th>
+                                    <th> day </th>
+                                    <th> exercise </th>
+                                    <th> category </th>
+                                    <th> weight </th>
+                                    <th> sesion </th>
+                                    <th> reps </th>
+                                    <th>  </th>
+                                    <th>  </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in training_of_this_week%}
+
+                                <tr>
+                                    <td>{{i.date}}</td>
+                                    <td>{{i.date| date:"l"}}</td>
+                                    <td>{{i.exercise}}</td>
+                                    <td>{{i.exercise.category}}</td>
+                                    <td>{{i.weigth}}</td>
+                                    <td>{{i.sesion}}</td>
+                                    <td>{{i.reps}}</td>
+                                    <td> <a class="btn btn-sm btn-info" href="{% url 'updateTraining' i.id%}">UPDATE</a>
+                                    </td>
+                                    <td> <a class="btn btn-sm btn-danger"
+                                            href="{% url 'deleteTraining' i.id%}">DELETE</a> </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
 
-    </div>
-</div>
+            <div class="container text-center" style="margin-top: 15px;">
+                <div class="row">
+                    <div class="col-12">
 
 
+                        <table class="mytable">
+                            <thead>
+                                <tr>
+                                    <td colspan="9">Last Week</td>
+                                </tr>
+                                <tr>
+                                    <th> date </th>
+                                    <th> exercise </th>
+                                    <th> category </th>
+                                    <th> weight </th>
+                                    <th> sesion </th>
+                                    <th> reps </th>
+                                    <th>  </th>
+                                    <th>  </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in training_of_last_week%}
+                                <tr>
+                                    <td>{{i.date}}</td>
+                                    <td>{{i.exercise}}</td>
+                                    <td>{{i.exercise.category}}</td>
+                                    <td>{{i.weigth}}</td>
+                                    <td>{{i.sesion}}</td>
+                                    <td>{{i.reps}}</td>
+                                    <td> <a class="btn btn-sm btn-info" href="{% url 'updateTraining' i.id%}">UPDATE</a>
+                                    </td>
+                                    <td> <a class="btn btn-sm btn-danger"
+                                            href="{% url 'deleteTraining' i.id%}">DELETE</a> </td>
+
+                                </tr>
+
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>

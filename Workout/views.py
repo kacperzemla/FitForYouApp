@@ -11,6 +11,9 @@ from .decorators import unauthenticated_user
 from .forms import TrainingForm, CustomerForm, ExerciseForm
 from django.forms import inlineformset_factory
 from django.forms import inlineformset_factory  # kilka form naraz
+from datetime import timedelta
+from django.utils import timezone
+from datetime import datetime
 # Create your views here.
 
 
@@ -100,15 +103,41 @@ def createTraning(request, pk):
 @login_required(login_url='main')
 def diet(request):
     meals = request.user.customer.meal_set.all()
-    context = {'meals': meals}
+
+    some_day_last_week =  timezone.now().date() - timedelta(days=7) #cofamy się tydzien do tylu
+
+    monday_of_last_week = some_day_last_week - timedelta(days=(some_day_last_week.isocalendar()[2] - 1))
+    # pobieramy dzień tygodnia some_day_last_week.isocalendar()[2] - to nasz dzień tygodnia a chcemy mieć
+    # różnicę jaka nas dzieli od poniedziałku czyli -1 i odejmujemy te dni od aktualnego i mamy poniedzialek ostatniego tygodnia
+
+    monday_of_this_week = monday_of_last_week + timedelta(days=7) #teraz dodajemy 7 dni i mamy poniedzialek tego tygodnia :)
+    monday_of_next_week = monday_of_this_week+timedelta(days=7)
+  #  print(monday_of_this_week)
+  #  print(sunday_of_this_week)
+    meals_of_last_week = request.user.customer.meal_set.all().filter(date__gte=monday_of_last_week, date__lt=monday_of_this_week).order_by('-date')
+    meals_of_this_week = request.user.customer.meal_set.all().filter(date__gte=monday_of_this_week, date__lt=monday_of_next_week).order_by('-date')
+    #meals2 = Meal.objects.filter(date__gte=monday_of_last_week, date__lt=monday_of_this_week)
+    #gt -> greater than, lt - less than
+    print(meals_of_last_week)
+    context = {'meals_of_last_week': meals_of_last_week,'meals_of_this_week': meals_of_this_week}
     return render(request, 'Workout\diet.html', context)
 
 
 @login_required(login_url='main')
 def training(request):
+    some_day_last_week =  timezone.now().date() - timedelta(days=7)
+
+    monday_of_last_week = some_day_last_week - timedelta(days=(some_day_last_week.isocalendar()[2] - 1))
+    monday_of_this_week = monday_of_last_week + timedelta(days=7)
+    monday_of_next_week = monday_of_this_week+timedelta(days=7)
+  #  print(monday_of_this_week)
+  #  print(sunday_of_this_week)
+    training_of_last_week = request.user.customer.training_set.all().filter(date__gte=monday_of_last_week, date__lt=monday_of_this_week).order_by('-date')
+    training_of_this_week = request.user.customer.training_set.all().filter(date__gte=monday_of_this_week, date__lt=monday_of_next_week).order_by('-date')
+    print(training_of_this_week)
     exercises = Exercises.objects.all()
-    traning = request.user.customer.training_set.all()
-    context = {'exercises': exercises, 'traning': traning}
+
+    context = {'exercises': exercises, 'training_of_last_week': training_of_last_week, 'training_of_this_week': training_of_this_week}
     return render(request, 'Workout/training.html', context)
 
 
@@ -194,37 +223,50 @@ def deleteMeal(request, pk):
 
 @login_required(login_url='main')
 def calculator(request):
-    text = ''
-    text2 = ''
+    weight = ''
+    goal = ''
+    proteins = 0
+    fats = 0
+    carbs = 0
+    kcal = 0
+    warning = ''
     if request.method == 'POST':
         try:
-            text = request.POST['weight']
+            weight = request.POST['weight']
         except:
-            text='Enter your weight!'
+            warning='Enter your weight!'
         try:
-            text2 = request.POST['choice']
+            goal = request.POST['choice']
         except:
-            text = 'Invalid data provided!'
+            warning = 'Fill in the form'
 
-    if text2 == 'normal_intake':
-        try:
-            text = int(text)*33
-        except:
-            text = 'Invalid data provided!'
-    elif text2 == 'mass':
-        try:
-            text = int(text)*35
-        except:
-            text = 'Invalid data provided!'
-    else:
-        try:
-            text = int(text)*31
-        except:
-            text = 'Invalid data provided!'
 
-    context = {'text': text}
-    print(text)
-    print(text2)
+    if goal == 'normal_intake':
+        try:
+            kcal = int(weight)*33
+        except:
+            warning = 'Fill in the form'
+    if goal == 'mass':
+        try:
+            kcal = int(weight)*33+300
+        except:
+            warning = 'Fill in the form'
+    if goal == 'reduction':
+        try:
+            kcal = int(weight)*33-300
+        except:
+            warning = 'Fill in the form'
+
+    if goal =='normal_intake' or goal =='mass' or goal == 'reduction':
+        try:
+            proteins = 2* int(weight)
+            fats = round(0.3 *int(kcal)/9)
+            carbs =  (kcal - 9*fats - 4*proteins)//4
+        except:
+            pass
+
+    context = {'kcal': kcal,'proteins': proteins,'fats': fats,'carbs': carbs,'warning': warning}
+
 
     return render(request, 'Workout/calculator.html', context)
 
@@ -296,5 +338,16 @@ def rankings(request):
                 deadLiftMasters[cybant.customer.username]=cybant
                 top5 += 1
 
-    context ={'benchPressMasters' :benchPressMasters.values() , 'squatMasters' :squatMasters.values() , 'deadLiftMasters' :deadLiftMasters.values()}    
+    context ={'benchPressMasters' :benchPressMasters.values() , 'squatMasters' :squatMasters.values() , 'deadLiftMasters' :deadLiftMasters.values()}
     return render(request, 'Workout/rankings.html', context)
+
+def allMeals(request):
+    meals = request.user.customer.meal_set.all()
+    context = {'meals': meals}
+    return render(request,'Workout/allMeals.html',context)
+
+def allTrainings(request):
+    trainings = request.user.customer.training_set.all()
+    print(trainings)
+    context = {'trainings':trainings}
+    return render(request,'Workout/allTrainings.html',context)

@@ -20,4 +20,6 @@ urlpatterns = [
     path('calculator',views.calculator, name='calculator'),
     path('rankings',views.rankings, name='rankings'),
     path('friends',views.friends, name='friends'),
+    path('allTrainings',views.allTrainings, name='allTrainings'),
+    path('allMeals', views.allMeals, name='allMeals'),
 ]

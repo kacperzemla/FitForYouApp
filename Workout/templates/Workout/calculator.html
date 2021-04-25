@@ -16,13 +16,19 @@
 <style>
     .hello-msg {
         font-size: 18px;
-        color: white;  
+        color: rgb(255, 255, 255);  
         margin-right: 20px;
     }
 
-    body {
-        background-color: #f9f9fa
+    body{
+        background-color: #5ca0f2;
+background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
+
     }
+
+
+
+    
 
     .padding {
         padding: 3rem !important
@@ -308,6 +314,65 @@
     .update_button:focus {
         outline: 0;
     }
+
+    .table_calculator{
+        width: 100%;
+        border-radius: 5px 5px 5px 5px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.247);
+        font-family:  Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+        text-align: center;
+        overflow: hidden;
+        font-size: 20px;
+        background-color: #63a4ff;
+        background-image: linear-gradient(315deg, #63a4ff 0%, #83eaf1 74%);
+    }
+
+    .table_calculator th{
+        
+        border-bottom: 3px solid rgb(255, 255, 255);
+        color: white;
+    }
+
+    .table_calculator th,td{
+        padding: 15px 12px;
+    }
+
+    .table_calculator tbody{
+        color: #3542b8;
+    }
+
+    .weight_input{
+        background-color: rgba(0,0,0,0);
+        border: 1px solid white;
+        color: white;
+    }
+    .weight_input:focus{
+        outline: 2px solid rgba(255, 255, 255, 0.548);
+        color: white;
+    }
+    
+    .text-wrapper{
+        width: 25%;
+        margin-left: 45%;
+        text-align: left;
+    }
+    .mybtn {
+        color: white;
+        background-color: #3542b8;
+        background-image: linear-gradient(315deg, #3542b8 0%, #5aa6ee 74%);
+        border: none;
+        padding: 13px;
+        border-radius: 10px;
+        transition: all .2s ease-in-out;
+        font-family: 'Sunflower', sans-serif;
+        text-transform: uppercase;
+    }
+
+    .mybtn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 6px -6px rgb(45, 118, 228);
+    }
+
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -336,32 +401,50 @@
     <span><a class="nav-item nav-link" href="{% url 'logout' %}"">Logout</a></span>
 </nav>
 
-<div class="container text-center " style="margin-top: 15px;">
+<div class="container text-center " style="margin-top: 15px; ">
     <div class="row ">
         <div class="col-12 mx-auto">
-        <div class="card">
-            <div class="card-header">
-               Calculator
-            </div>
-            <div class="card-body">
-               <form method="POST">
-                {% csrf_token %}
-                <label>
-                    Enter your weight:
-                    <input type="number" name="weight">
-                </label>
-                <input type="radio" id="choice1" name="choice" value="normal_intake">
-                <label for="choice1">Normal Intake</label>
-                <input type="radio" id="choice2" name="choice" value="mass">
-                <label for="choice2">Mass</label>
-                <input type="radio" id="choice3" name="choice" value="reduction">
-                <label for="choice3">Reduction</label>
-                    <!-- okolo 31-35 kcal na 1kg masy ciala, bialko 2g na kg, fats 25-40% okolo, 1g tluszczu -> 9kcal , 1g bialka -> 4kcal, wegle reszta -->
-                   <input type="submit">
-               </form>
-               <p>{{ text }}</p>
-            </div>
-        </div>
+       
+            <table class="table_calculator">
+                <thead>
+                    <tr><th>Calculator</th></tr>
+                   
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <label>
+                                    Enter your weight:
+                                    <input type="number" name="weight" class="weight_input">
+                                </label>
+                                <p>
+                                    <input type="radio" id="choice1" name="choice" value="normal_intake">
+                                    <label for="choice1">Normal Intake</label>
+                                    <input type="radio" id="choice2" name="choice" value="mass">
+                                    <label for="choice2">Mass</label>
+                                    <input type="radio" id="choice3" name="choice" value="reduction">
+                                    <label for="choice3">Reduction</label>
+                                </p>
+                                    <!-- okolo 31-35 kcal na 1kg masy ciala, bialko 2g na kg, fats 25-40% okolo, 1g tluszczu -> 9kcal , 1g bialka -> 4kcal, wegle reszta -->
+                                <input type="submit" class="mybtn" value="calculate">
+                            
+                            </form>
+                            <div class="text-wrapper">
+                                <p style="color: rgb(133, 31, 31); text-transform: uppercase;">{{ warning }}</p>
+                                <p>KCAL: {{ kcal }}</p>
+                                <p>CARBS: {{ carbs }}</p>
+                                <p>FATS: {{ fats }}</p>
+                                <p>PROTEINS: {{ proteins }}</p>
+                                
+                            </div>
+                            <p style="color: #3542b8;">Remember that this calculator is general for everyone. If You feel better with higher fats or carbs you can change it!</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        
         </div>
     </div>
 </div>
