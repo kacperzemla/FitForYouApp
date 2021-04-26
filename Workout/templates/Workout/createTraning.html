@@ -17,6 +17,36 @@
         color: white;
         margin-right: 20px;
     }
+    .mybtn {
+        color: white;
+        background-color: #3542b8;
+        background-image: linear-gradient(315deg, #3542b8 0%, #5aa6ee 74%);
+        border: none;
+        padding: 13px;
+        border-radius: 10px;
+        transition: all .2s ease-in-out;
+        font-family: 'Sunflower', sans-serif;
+        text-transform: uppercase;
+    }
+
+    .mybtn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 6px -6px rgb(45, 118, 228);
+    }
+    body{
+        background-color: #b1bfd8;
+background-image: linear-gradient(315deg, #b1bfd8 0%, #6782b4 74%);
+    }
+    .weight_input{
+        background-color: rgba(0,0,0,0);
+        border: 1px solid white;
+        color: white;
+    }
+    .weight_input:focus{
+        outline: 2px solid rgba(255, 255, 255, 0.548);
+        color: white;
+    }
+
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -45,7 +75,7 @@
     <span><a class="nav-item nav-link" href="{% url 'logout' %}"">Logout</a></span>
 </nav>
 
-<div class="container">
+<div class="container text-center" style="margin-top: 15px;">
     <div class="row">
         <div class="col-12">
             <form action="" method="POST">
@@ -55,7 +85,7 @@
                     {{form}}
                     <hr>
                 {% endfor %}
-                <input type="submit" name="Submit">
+                <input type="submit" name="Submit" class="mybtn">
             </form>
         </div>
     </div>

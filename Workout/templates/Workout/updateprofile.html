@@ -40,7 +40,39 @@
         transform: scale(1.1);
         box-shadow: 0 8px 6px -6px rgb(45, 118, 228);
     }
+    .table_calculator{
+        width: 100%;
+        border-radius: 5px 5px 5px 5px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.247);
+        font-family:  Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+        text-align: center;
+        overflow: hidden;
+        font-size: 20px;
+        background-color: #63a4ff;
+        background-image: linear-gradient(315deg, #63a4ff 0%, #83eaf1 74%);
+    }
+    .table_calculator th{
+        border-bottom: 3px solid rgb(255, 255, 255);
+        color: white;
+    }
 
+    .table_calculator th,td{
+        padding: 15px 12px;
+    }
+
+    .table_calculator tbody{
+        color: #3542b8;
+    }
+
+    .weight_input{
+        background-color: rgba(0,0,0,0);
+        border: 1px solid white;
+        color: white;
+    }
+    .weight_input:focus{
+        outline: 2px solid rgba(255, 255, 255, 0.548);
+        color: white;
+    }
 
 </style>
 
@@ -50,7 +82,7 @@
 
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-           
+
             <div class="navbar-nav">
                 <a class="nav-item nav-link active" href="{% url 'profile' %}"><i class="fa fa-fw fa-user"></i>&nbsp;Profile
                     <span class="sr-only">(current)</span></a>
@@ -73,18 +105,24 @@
 <div class="container text-center" style="margin-top: 15px;">
     <div class="row ">
         <div class="col-5 mx-auto">
-        <div class="card">
-            <div class="card-header">
-                Fill in your details
-            </div>
-            <div class="card-body">
-                <form method="POST" >
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <input class="btn btn-primary" type="submit" name="Update Information">
-                </form>
-            </div>
-        </div>
+            <table class="table_calculator">
+                <thead>
+                    <tr>
+                        <th>Fill in your details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                        <form method="POST" >
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input class="btn btn-primary" type="submit" name="Update Information">
+                        </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

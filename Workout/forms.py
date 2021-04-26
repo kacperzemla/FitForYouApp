@@ -9,7 +9,11 @@ class TrainingForm(ModelForm):
    class Meta:
       model = Training
       fields = ['exercise','weigth','sesion','reps']
-
+      
+   def __init__(self, *args, **kwargs):
+        super(TrainingForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'weight_input'
 
 class RelationsForm(ModelForm):
    class meta:
@@ -34,4 +38,8 @@ class CustomerForm(ModelForm):
       fields = '__all__'
       exclude = ['user'] #wyrzucamy z pol usera bo przeciez tego sie nie da zmienic
 
+   def __init__(self, *args, **kwargs):
+        super(CustomerForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'weight_input'
 

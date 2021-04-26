@@ -84,7 +84,7 @@ def profile(request):
 
 def createTraning(request, pk):
     TrainingFormSet = inlineformset_factory(Customer, Training, fields=(
-        'exercise', 'weigth', 'sesion', 'reps', 'customer'), extra=10)
+        'exercise', 'weigth', 'sesion', 'reps', 'customer'), extra=10,can_delete=False)
     customer = Customer.objects.get(id=pk)
     formset = TrainingFormSet(
         queryset=Training.objects.none(), instance=customer)
