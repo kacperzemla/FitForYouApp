@@ -4,12 +4,12 @@ from . import templates
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from .forms import CreateUserForm
-from .filters import FriendFilter
+from .filters import FriendFilter, TextFilter
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user
-from .forms import TrainingForm, CustomerForm, ExerciseForm , DialogueForm
+from .forms import TrainingForm, CustomerForm, ExerciseForm
 from django.forms import inlineformset_factory
 from django.forms import inlineformset_factory  # kilka form naraz
 from datetime import timedelta
@@ -525,15 +525,13 @@ def messagesS(request , pk):
     thisUser = customers.filter(username=loggedUsername)
     dialogues = Dialogues.objects.all()
     listOfText = []
-    form  = DialogueForm()
+    myFilter = TextFilter()
 
-    if request.method == "POST":
-        form = DialogueForm(request.POST)
-        form.receiver = friend
-        form.sender= thisUser[0]
-        if form.is_valid():
-            form.save()
-        return redirect('friends')
+    if 'newTextSend' in request.POST:
+        newText = request.POST['newText']
+        dialogue = Dialogues.create(thisUser[0] , friend ,newText)
+        dialogue.save()
+        return redirect("messagesS" , friend.id)
 
     for cybant in dialogues:
         if (cybant.sender == thisUser[0] and cybant.receiver == friend) or(cybant.sender == friend and cybant.receiver == thisUser[0]):
@@ -541,10 +539,17 @@ def messagesS(request , pk):
 
     myText = Dialogues.objects.filter(id__in=listOfText)
 
-    context ={'myText':myText.order_by('-id') , 'form':form}
-    return render(request, 'Workout/messagesS.html', context)
-    
+    print(request.method)
+    print(request.POST)
+    print(request.GET)
 
+    if 'searchText' in request.POST:
+        myFilter = TextFilter(request.POST, queryset=myText)
+        myText = myFilter.qs
+    myText = myText.order_by('-id')
+
+    context ={'myText':myText.order_by('-id') , 'myFilter':myFilter }
+    return render(request, 'Workout/messagesS.html', context)
 
 def allMeals(request):
     meals = request.user.customer.meal_set.all()

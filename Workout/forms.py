@@ -19,7 +19,7 @@ class RelationsForm(ModelForm):
 class ExerciseForm(ModelForm):
    class Meta:
       model = Exercises
-      fields =['name','category']
+      fields = '__all__'
 
 class CreateUserForm(UserCreationForm):
 
@@ -35,7 +35,3 @@ class CustomerForm(ModelForm):
       exclude = ['user'] #wyrzucamy z pol usera bo przeciez tego sie nie da zmienic
 
 
-class DialogueForm(ModelForm):
-   class Meta:
-      model = Dialogues
-      fields = ['text']

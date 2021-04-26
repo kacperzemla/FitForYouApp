@@ -17,14 +17,6 @@ class Customer(models.Model):
         return self.username
 
 
-class Equipment(models.Model):
-    id = models.CharField(max_length=6, primary_key=True)
-    name = models.CharField(max_length=50, null=True)
-
-    def __str__(self):
-        return self.name
-
-
 class Exercises(models.Model):
 
     CATEGORY = (
@@ -38,8 +30,15 @@ class Exercises(models.Model):
         ('BACK','BACK')
     )
 
+    LEVEL = (
+        ('PROFESSIONAL','PROFESSIONAL'),
+        ('BEGINNER','BEGINNER'),
+        ('INTERMEDIATE' , 'INTERMEDIATE')
+    )
+
     name = models.CharField(max_length=50 , null=True);
     category = models.CharField(max_length=50, null=True , choices=CATEGORY)
+    level = models.CharField(max_length=50, null=True , choices=LEVEL)
     def __str__(self):
         return self.name
 
@@ -83,6 +82,11 @@ class Dialogues(models.Model):
     sender =  models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL , related_name="senderText")
     receiver =  models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL , related_name="receiverText")
     text = models.CharField(max_length=200, null=True)
+
+    @classmethod
+    def create(cls, sender,receiver,text):
+        newDialogue = cls(sender= sender , receiver= receiver , text=text)
+        return newDialogue
 
 class Relations(models.Model):
     STATUS = (

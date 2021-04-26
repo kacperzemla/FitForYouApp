@@ -61,12 +61,14 @@
     <span><a class="nav-item nav-link" href="{% url 'logout' %}"">Logout</a></span>
 </nav>
 
-<form  method="POST">
+<form method="POST">
     {% csrf_token %}
-    {{form}}
-    <input type="submit" name="Submit">
-
-</form>
+    <label>
+        Enter your text
+        <input type="text" name="newText" class="new_text" >
+    </label>
+    <input type="submit"  value="send" name="newTextSend">
+<form>    
 
 <div class="container text-center">
     <div class="row ">
@@ -76,7 +78,10 @@
                     MESSAGES
                 </div>
                 <div class="card-body">
-            
+                    <form method="POST">
+                        {{myFilter.form}}
+                        <button class="btn btn-primary" type="submit" name="searchText">SEARCH</button>
+                    </form>
                     <table class="table">
                         <tr>
                             <th> sender </th>
