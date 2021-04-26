@@ -17,6 +17,78 @@
         color: white;
         margin-right: 20px;
     }
+
+    .mytable {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        width: 100%;
+        border-radius: 5px 5px 0 0;
+        overflow: hidden;
+    }
+
+    .mytable thead tr {
+        background-color: #3542b8;
+        background-image: linear-gradient(315deg, #3542b8 0%, #5aa6ee 74%);
+        color: #ffffff;
+        text-align: left;
+        text-transform: uppercase;
+    }
+
+    .mytable thead tr:nth-of-type(2) {
+        border-right: 2px solid #5aa6ee;
+
+    }
+
+    .mytable th,
+    .mytable td {
+        padding: 12px 15px;
+        font-weight: bold;
+    }
+
+    .mytable tbody {
+        border-right: 2px solid #5aa6ee;
+        border-left: 2px solid #5aa6ee
+    }
+
+    .mytable tbody tr {
+        border-bottom: 1px solid #dddddd;
+
+    }
+
+    .mytable tbody tr:last-of-type {
+        border-bottom: 2px solid #5aa6ee;
+    }
+
+    .mytable thead tr:first-of-type {
+        text-align: center;
+        border-bottom: 2px solid #5aa6ee;
+        background-color: rgb(49, 87, 214);
+    }
+
+    .invite_friends{
+        margin: 25px 0;
+        border: 1px solid #5aa6ee;
+        border-radius: 5px 5px 0 0;
+        font-family: sans-serif;
+        background-color: #63a4ff;
+        background-image: linear-gradient(315deg, #63a4ff 0%, #83eaf1 74%);
+        color: white;
+    }
+
+    .invite_friends_header{
+        border-bottom: 1px solid #5aa6ee;
+        padding: 5px;
+        background-color: #3542b8;
+        background-image: linear-gradient(315deg, #3542b8 0%, #5aa6ee 74%);
+        color: white;
+        text-transform: uppercase;
+        font-size: 0.9em;
+        font-weight: bold;
+       
+    }
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -25,16 +97,20 @@
 
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-           
+
             <div class="navbar-nav">
                 <a class="nav-item nav-link" href="{% url 'profile' %}"><i class="fa fa-fw fa-user"></i>&nbsp;Profile
-                <a class="nav-item nav-link" href="{% url 'training' %}"><i class="fas fa-dumbbell"></i>&nbsp;Training</a>
-                <a class="nav-item nav-link" href="{% url 'exercises'%}"><i class="fas fa-running"></i>&nbsp;Exercises</a>
-                <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="{% url 'training' %}"><i
+                            class="fas fa-dumbbell"></i>&nbsp;Training</a>
+                    <a class="nav-item nav-link" href="{% url 'exercises'%}"><i
+                            class="fas fa-running"></i>&nbsp;Exercises</a>
+                    <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" href="{% url 'diet' %}"><i class="fas fa-utensils"></i>&nbsp;Diet</a>
-                <a class="nav-item nav-link" href="{% url 'calculator'%}"><i class="fas fa-calculator"></i>&nbsp;Calculator</a>
+                <a class="nav-item nav-link" href="{% url 'calculator'%}"><i
+                        class="fas fa-calculator"></i>&nbsp;Calculator</a>
                 <a class="nav-item nav-link" href="{% url 'rankings'%}"><i class="fas fa-trophy"></i>&nbsp;Rankings</a>
-                <a class="nav-item nav-link active" href="{% url 'friends'%}"><i class="fas fa-users"></i>&nbsp;Friends</a>
+                <a class="nav-item nav-link active" href="{% url 'friends'%}"><i
+                        class="fas fa-users"></i>&nbsp;Friends</a>
 
 
             </div>
@@ -45,116 +121,129 @@
     <span><a class="nav-item nav-link" href="{% url 'logout' %}"">Logout</a></span>
 </nav>
 
-<div class="container text-center">
-    <div class="row ">
-        <div class="col-4 mx-auto">
-            <div class="card">
-                <div class="card-header">
-                    Friends
+<div class=" container text-center">
+            <div class="row ">
+                <div class="col-4 mx-auto">
+                    
+
+                            <table class="mytable">
+                                <thead>
+                                    <tr>
+                                        <th colspan="3">
+                                            Friends
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th> username </th>
+                                        <th> profile </th>
+                                        <th> block </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>{% for i in actualFriends%}
+                                    <tr>
+                                        <td>{{i.username}}</td>
+                                        <td> <a class="btn btn-sm btn-info"
+                                                href="{% url 'friendProfile' i.id%}">PROFILE</a> </td>
+                                        <td> <a class="btn btn-sm btn-danger"
+                                                href="{% url 'friendBlock' i.id%}">BLOCK</a> </td>
+                                    </tr>
+
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        
+                    </div>
+               
+
+                <div class="col-4 mx-auto">
+                  
+
+                            <table class="mytable">
+                                <thead>
+                                    <tr>
+                                        <th colspan="3">Invitations</th>
+                                    </tr>
+                                    <tr>
+                                        <th> username </th>
+                                        <th> confirm </th>
+                                        <th> decline </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>{% for i in invitations%}
+                                    <tr>
+                                        <td>{{i.username}}</td>
+                                        <td> <a class="btn btn-sm btn-info"
+                                                href="{% url 'friendConfirm' i.id%}">CONFIRM</a> </td>
+                                        <td> <a class="btn btn-sm btn-info"
+                                                href="{% url 'friendDecline' i.id%}">DECLINE</a> </td>
+                                    </tr>
+
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                      
+
+                   
+
+                            <table class="mytable">
+                                <thead>
+                                    <tr>
+                                        <th colspan="3">BLOCKED</th>
+                                    </tr>
+                                    <tr>
+                                        <th> username </th>
+                                        <th> unblocked </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody> {% for i in userToPossibileUnblock%}
+                                    <tr>
+                                        <td>{{i.username}}</td>
+                                        <td> <a class="btn btn-sm btn-info"
+                                                href="{% url 'friendUnblock' i.id%}">UNBLOCK</a> </td>
+                                    </tr>
+
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                
+
                 </div>
-                <div class="card-body">
-            
-                    <table class="table">
-                        <tr>
-                            <th> username </th>
-                            <th> profile </th>
-                            <th> block </th>
-                        </tr>
 
-                        {% for i in actualFriends%}
-                            <tr>
-                                <td>{{i.username}}</td>
-                                <td> <a class="btn btn-sm btn-info" href="{% url 'friendProfile' i.id%}">PROFILE</a> </td>
-                                <td> <a class="btn btn-sm btn-danger" href="{% url 'friendBlock' i.id%}">BLOCK</a> </td>
-                            </tr>
+                <div class="col-4 mx-auto">
+                    <div class="invite_friends">
+                        <div class="invite_friends_header text-center">
+                            Invite new friends
+                        </div>
+                        <div class="card-body">
+                            <form method="GET">
+                                {{myFilter.form}}
+                                <button class="btn btn-primary" type="submit">SEARCH</button>
+                            </form>
+                            <table class="mytable" style="color: white;">
+                                
+                                <thead>
+                                    <tr>
+                                        <th> username </th>
+                                        <th> invite </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in newFriends%}
+                                    <tr>
+                                        <td>{{i.username}}</td>
+                                        <td> <a class="btn btn-sm btn-info"
+                                                href="{% url 'friendInvite' i.id%}">INVITE</a> </td>
 
-                        {% endfor %}
-                    </table>
+                                    </tr>
+
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    
-        <div class="col-4 mx-auto">
-            <div class="card">
-                <div class="card-header">
-                    Invitations
-                </div>
-                <div class="card-body">
-            
-                    <table class="table">
-                        <tr>
-                            <th> username </th>
-                            <th> confirm </th>
-                            <th> decline </th>
-                        </tr>
-
-                        {% for i in invitations%}
-                            <tr>
-                                <td>{{i.username}}</td>
-                                <td> <a class="btn btn-sm btn-info" href="{% url 'friendConfirm' i.id%}">CONFIRM</a> </td>
-                                <td> <a class="btn btn-sm btn-info" href="{% url 'friendDecline' i.id%}">DECLINE</a> </td>
-                            </tr>
-
-                        {% endfor %}
-                    </table>
-                </div>
             </div>
-
-            <div class="card">
-                <div class="card-header">
-                    BLOCKED
-                </div>
-                <div class="card-body">
-            
-                    <table class="table">
-                        <tr>
-                            <th> username </th>
-                            <th> unblocked </th>
-                        </tr>
-
-                        {% for i in userToPossibileUnblock%}
-                            <tr>
-                                <td>{{i.username}}</td>
-                                <td> <a class="btn btn-sm btn-info" href="{% url 'friendUnblock' i.id%}">UNBLOCK</a> </td>
-                            </tr>
-
-                        {% endfor %}
-                    </table>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="col-4 mx-auto">
-            <div class="card">
-                <div class="card-header">
-                    Invite new friends
-                </div>
-                <div class="card-body">
-                    <form method="GET">
-                        {{myFilter.form}}
-                        <button class="btn btn-primary" type="submit">SEARCH</button>
-                    </form>
-                    <table class="table">
-                        <tr>
-                            <th> username </th>
-                            <th> invite </th>
-                        </tr>
-
-                        {% for i in newFriends%}
-                            <tr>
-                                <td>{{i.username}}</td>
-                                <td> <a class="btn btn-sm btn-info" href="{% url 'friendInvite' i.id%}">INVITE</a> </td>
-
-                            </tr>
-
-                        {% endfor %}
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-      

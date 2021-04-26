@@ -17,6 +17,23 @@
         color: white;
         margin-right: 20px;
     }
+    .mybtn {
+        color: white;
+        background-color: #3542b8;
+        background-image: linear-gradient(315deg, #3542b8 0%, #5aa6ee 74%);
+        border: none;
+        padding: 13px;
+        border-radius: 10px;
+        transition: all .2s ease-in-out;
+        font-family: 'Sunflower', sans-serif;
+        text-transform: uppercase;
+    }
+
+    .mybtn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 6px -6px rgb(45, 118, 228);
+    }
+
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -47,22 +64,24 @@
 
 
 <br> 
-<div class="row">
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-8">
-        <div class="card card-body">
-
-            <form method="POST">
-                {% csrf_token %}
-                {{form}}
-                
-
-                <input class="btn-info" type="submit" value="SUMBIT">
-            </form>
-    
+<div class="container text-center">
+    <div class="row">
+        <div class="col-md-2">
         </div>
-    </div>
-    <div class="col-md-2">
+        <div class="col-md-8">
+            <div class="card card-body">
+
+                <form method="POST">
+                    {% csrf_token %}
+                    {{form}}
+                    
+
+                    <input class="mybtn" type="submit" value="CREATE">
+                </form>
+        
+            </div>
+        </div>
+        <div class="col-md-2">
+        </div>
     </div>
 </div>
