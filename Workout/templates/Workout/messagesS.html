@@ -157,28 +157,32 @@ background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
 
 
 <div class=" container text-center" style="margin-top: 15px;">
-            <div class="send">
-                <form method="POST">
-                    {% csrf_token %}
-                    <label>
-                        Enter your text
-                        <input type="text" name="newText" class="new_text">
-                    </label>
-                    <input type="submit" value="send" name="newTextSend" class="mybtn">
-                    <form>
-            </div>
+    
 
             <div class="row ">
                 <div class="col-9 mx-auto">
+                    
                     <div class="invite_friends">
                         <div class="invite_friends_header text-center">
                             MESSAGES
                         </div>
+
+                        <div class="send">
+                            <form method="POST">
+                                {% csrf_token %}
+                                <label>
+                                    Enter your text
+                                    <input type="text" name="newText" class="new_text">
+                                </label>
+                                <input type="submit" value="send" name="newTextSend" class="mybtn">
+                                <form>
+                        </div>
+
                         <div class="">
                             <div style="margin-top: 15px;">
                             <form method="POST">
                                 {{myFilter.form}}
-                                <button class="btn btn-primary" type="submit" name="searchText">SEARCH</button>
+                                <button class="btn btn-primary mybtn"  type="submit" name="searchText">SEARCH</button>
                             </div>
                             </form>
                             <table class="mytable">

@@ -27,7 +27,6 @@ urlpatterns = [
     path('friendInvite/<str:pk>',views.friendInvite, name='friendInvite'),
     path('friendUnblock/<str:pk>',views.friendUnblock, name='friendUnblock'),
     path('messagesS/<str:pk>',views.messagesS, name='messagesS'),
-
     path('allTrainings',views.allTrainings, name='allTrainings'),
     path('allMeals', views.allMeals, name='allMeals'),
 ]

@@ -39,9 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'Workout',
 
     'django_filters',
+    
     'django.db.models.utils',
 ]
 
