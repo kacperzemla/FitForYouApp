@@ -36,7 +36,7 @@ class CustomerForm(ModelForm):
    class Meta:
       model = Customer
       fields = '__all__'
-      exclude = ['user'] #wyrzucamy z pol usera bo przeciez tego sie nie da zmienic
+      exclude = ['user'] 
 
    def __init__(self, *args, **kwargs):
         super(CustomerForm, self).__init__(*args, **kwargs)

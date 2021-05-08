@@ -1,19 +1,20 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
 from django import forms
 
 
 class Customer(models.Model):
-    # on_delete= models.CASCADE jezeli usuniemy uzytkownika tego glownego to to powiazanie tez zostanie usuniete
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     username = models.CharField(max_length=50, null=True)
     name = models.CharField(max_length=50, null=True)
     surname = models.CharField(max_length=50, null=True)
     email = models.CharField(max_length=50, null=True)
-    number = models.IntegerField(null=True)
+    number = models.IntegerField(validators=[MinValueValidator(100000000), MaxValueValidator(999999999)],null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
-    weight = models.IntegerField(null=True)
-    height = models.IntegerField(null=True)
+    weight = models.IntegerField(validators=[MinValueValidator(10), MaxValueValidator(500)], null=True)
+    height = models.IntegerField(validators=[MinValueValidator(100), MaxValueValidator(400)],null=True)
+    image = models.ImageField(default = "profile.png" , blank=True, null=True);
     def __str__(self):
         return self.username
 
@@ -51,9 +52,9 @@ class Training(models.Model):
         Exercises, null=True, on_delete=models.SET_NULL)
     customer = models.ForeignKey(
         Customer, null=True, on_delete=models.SET_NULL)
-    weigth = models.IntegerField(null=True)
-    sesion = models.IntegerField(null=True)
-    reps = models.IntegerField(null=True)
+    weigth = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(500)],null=True)
+    sesion = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)],null=True)
+    reps = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(500)],null=True)
 
     def getCustumerId(sef):
         return self.customer.id
@@ -64,14 +65,17 @@ class Training(models.Model):
     def getCustumerUsername(self):
         return self.customer.username
 
+    def __str__(self):
+        return self.exercise.name
+
 
 class Meal(models.Model):
     customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=50, null=True)
-    carbs = models.IntegerField(null=True)
-    fats = models.IntegerField(null=True)
-    proteins = models.IntegerField(null=True)
-    kcal = models.IntegerField(null=True)
+    carbs = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)],null=True)
+    fats = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)],null=True)
+    proteins = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)],null=True)
+    kcal = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10000)],null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     date = models.DateTimeField(auto_now_add=False, null=True)
 
@@ -88,6 +92,9 @@ class Dialogues(models.Model):
     def create(cls, sender,receiver,text):
         newDialogue = cls(sender= sender , receiver= receiver , text=text)
         return newDialogue
+
+    def __str__(self):
+        return self.text
 
 class Relations(models.Model):
     STATUS = (
@@ -121,3 +128,8 @@ class Relations(models.Model):
 
     def confirmRelations(self):
         self.status = "friends"
+
+    def __str__(self):
+        return self.text
+    def __str__(self):
+        return self.status

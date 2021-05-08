@@ -11,17 +11,14 @@ from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user
 from .forms import TrainingForm, CustomerForm, ExerciseForm
 from django.forms import inlineformset_factory
-from django.forms import inlineformset_factory  # kilka form naraz
 from datetime import timedelta
 from django.utils import timezone
 from datetime import datetime
-# Create your views here.
 
 
-@unauthenticated_user  # w plik decorators.py znajduje się funkcja, która sprawdza czy użytkownik jest zalogowany i blokuje dostęp do podstron przed, którymi dodamy tzw. "decorator" czyli to co jest tutaj
+@unauthenticated_user 
 def main(request):
     return render(request, 'Workout/main.html')
-
 
 @unauthenticated_user
 def register(request):
@@ -29,7 +26,6 @@ def register(request):
 
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
-
         if form.is_valid():
             user = form.save()
             Customer.objects.create(
@@ -42,9 +38,7 @@ def register(request):
             return redirect('login')
 
     context = {'form': form}
-
     return render(request, 'Workout/register.html', context)
-
 
 @unauthenticated_user
 def loginPage(request):
@@ -63,13 +57,10 @@ def loginPage(request):
     context = {}
     return render(request, 'Workout/login.html')
 
-
 def logoutUser(request):
     logout(request)
     return redirect('login')
 
-
-# ta linijka zabezpiecza nam view przed wejściem jeśli nie jesteśmy zalogowani :), trzeba to dać przed każdą stroną, która ma być dostepna tylko dla użytkownika
 @login_required(login_url='main')
 def profile(request):
     name = request.user.customer.name
@@ -81,7 +72,7 @@ def profile(request):
                'phone': phone, 'height': height, 'weight': weight}
     return render(request, 'Workout/profile.html', context)
 
-
+@login_required(login_url='main')
 def createTraning(request, pk):
     TrainingFormSet = inlineformset_factory(Customer, Training, fields=(
         'exercise', 'weigth', 'sesion', 'reps', 'customer'), extra=10,can_delete=False)
@@ -100,30 +91,6 @@ def createTraning(request, pk):
 
     return render(request, 'Workout/createTraning.html', context)
 
-
-@login_required(login_url='main')
-def diet(request):
-    meals = request.user.customer.meal_set.all()
-
-    some_day_last_week =  timezone.now().date() - timedelta(days=7) #cofamy się tydzien do tylu
-
-    monday_of_last_week = some_day_last_week - timedelta(days=(some_day_last_week.isocalendar()[2] - 1))
-    # pobieramy dzień tygodnia some_day_last_week.isocalendar()[2] - to nasz dzień tygodnia a chcemy mieć
-    # różnicę jaka nas dzieli od poniedziałku czyli -1 i odejmujemy te dni od aktualnego i mamy poniedzialek ostatniego tygodnia
-
-    monday_of_this_week = monday_of_last_week + timedelta(days=7) #teraz dodajemy 7 dni i mamy poniedzialek tego tygodnia :)
-    monday_of_next_week = monday_of_this_week+timedelta(days=7)
-  #  print(monday_of_this_week)
-  #  print(sunday_of_this_week)
-    meals_of_last_week = request.user.customer.meal_set.all().filter(date__gte=monday_of_last_week, date__lt=monday_of_this_week).order_by('-date')
-    meals_of_this_week = request.user.customer.meal_set.all().filter(date__gte=monday_of_this_week, date__lt=monday_of_next_week).order_by('-date')
-    #meals2 = Meal.objects.filter(date__gte=monday_of_last_week, date__lt=monday_of_this_week)
-    #gt -> greater than, lt - less than
-    print(meals_of_last_week)
-    context = {'meals_of_last_week': meals_of_last_week,'meals_of_this_week': meals_of_this_week}
-    return render(request, 'Workout\diet.html', context)
-
-
 @login_required(login_url='main')
 def training(request):
     some_day_last_week =  timezone.now().date() - timedelta(days=7)
@@ -131,8 +98,6 @@ def training(request):
     monday_of_last_week = some_day_last_week - timedelta(days=(some_day_last_week.isocalendar()[2] - 1))
     monday_of_this_week = monday_of_last_week + timedelta(days=7)
     monday_of_next_week = monday_of_this_week+timedelta(days=7)
-  #  print(monday_of_this_week)
-  #  print(sunday_of_this_week)
     training_of_last_week = request.user.customer.training_set.all().filter(date__gte=monday_of_last_week, date__lt=monday_of_this_week).order_by('-date')
     training_of_this_week = request.user.customer.training_set.all().filter(date__gte=monday_of_this_week, date__lt=monday_of_next_week).order_by('-date')
     print(training_of_this_week)
@@ -140,7 +105,6 @@ def training(request):
 
     context = {'exercises': exercises, 'training_of_last_week': training_of_last_week, 'training_of_this_week': training_of_this_week}
     return render(request, 'Workout/training.html', context)
-
 
 @login_required(login_url='main')
 def deleteTraining(request, pk):
@@ -151,7 +115,7 @@ def deleteTraining(request, pk):
     context = {'training': training}
     return render(request, 'Workout/deleteTraining.html', context)
 
-
+@login_required(login_url='main')
 def updateTraining(request,pk):
     training = Training.objects.get(id=pk)
     form = TrainingForm(instance = training)
@@ -165,41 +129,46 @@ def updateTraining(request,pk):
     context ={'form' :form}
     return render(request,'Workout/updateTraining.html',context) 
 
-
-def createExercise(request):
-    exercises = Exercises.objects.all()
-    form = ExerciseForm()
-
-    if request.method == "POST":
-        form = ExerciseForm(request.POST)
-        if form.is_valid():
-            form.save()
-        return redirect('exercises')
-
-    context ={'form' :form}
-    return render(request,'Workout/createExercise.html',context) 
+@login_required(login_url='main')
+def allTrainings(request):
+    trainings = request.user.customer.training_set.all()
+    print(trainings)
+    context = {'trainings':trainings}
+    return render(request,'Workout/allTrainings.html',context)
 
 @login_required(login_url='main')
 def updateProfile(request):
     customer = request.user.customer
-    # do naszego formularza przypisujemy aktualnie zalogowanego uzytkownika
     form = CustomerForm(instance=customer)
 
     if request.method == "POST":
-        form = CustomerForm(request.POST, instance=customer)
+        form = CustomerForm(request.POST, request.FILES, instance=customer)
         if form.is_valid():
             form.save()
             return redirect('profile')
     context = {'form': form}
     return render(request, 'Workout/updateprofile.html', context)
 
+@login_required(login_url='main')
+def diet(request):
+    meals = request.user.customer.meal_set.all()
+
+    some_day_last_week =  timezone.now().date() - timedelta(days=7) 
+    monday_of_last_week = some_day_last_week - timedelta(days=(some_day_last_week.isocalendar()[2] - 1))
+    monday_of_this_week = monday_of_last_week + timedelta(days=7) 
+    monday_of_next_week = monday_of_this_week+timedelta(days=7)
+    meals_of_last_week = request.user.customer.meal_set.all().filter(date__gte=monday_of_last_week, date__lt=monday_of_this_week).order_by('-date')
+    meals_of_this_week = request.user.customer.meal_set.all().filter(date__gte=monday_of_this_week, date__lt=monday_of_next_week).order_by('-date')
+
+    print(meals_of_last_week)
+    context = {'meals_of_last_week': meals_of_last_week,'meals_of_this_week': meals_of_this_week}
+    return render(request, 'Workout\diet.html', context)
 
 @login_required(login_url='main')
 def createMeal(request, pk):
     MealFormSet = inlineformset_factory(Customer, Meal, fields=(
         'name', 'date', 'carbs', 'proteins', 'fats', 'kcal'), can_delete=False)
     customer = Customer.objects.get(id=pk)
-    # ten queryset zapewnia ze w formularzu pojawią się pola tylko na nowe posilki a nie na te ktore juz sa
     formset = MealFormSet(queryset=Meal.objects.none(), instance=customer)
 
     if request.method == 'POST':
@@ -210,7 +179,6 @@ def createMeal(request, pk):
     context = {'formset': formset}
     return render(request, 'Workout/createMeal.html', context)
 
-
 @login_required(login_url='main')
 def deleteMeal(request, pk):
     meal = Meal.objects.get(id=pk)
@@ -220,7 +188,6 @@ def deleteMeal(request, pk):
 
     context = {"meal": meal}
     return render(request, 'Workout/deleteMeal.html', context)
-
 
 @login_required(login_url='main')
 def calculator(request):
@@ -272,6 +239,12 @@ def calculator(request):
     return render(request, 'Workout/calculator.html', context)
 
 @login_required(login_url='main')
+def allMeals(request):
+    meals = request.user.customer.meal_set.all()
+    context = {'meals': meals}
+    return render(request,'Workout/allMeals.html',context)
+
+@login_required(login_url='main')
 def exercises(request):
     exercises  = Exercises.objects.all()
     print (exercises)
@@ -303,10 +276,58 @@ def exercises(request):
         
     context = {'chest':chest,'legs':legs,'back':back,'abs_':abs_,'shoulders':shoulders,'bic_tric':bic_tric,'cardio':cardio,'booty':booty}
     return render(request, 'Workout/exercises.html', context)
- 
 
+@login_required(login_url='main')
+def createExercise(request):
+    exercises = Exercises.objects.all()
+    form = ExerciseForm()
+
+    if request.method == "POST":
+        form = ExerciseForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('exercises')
+
+    context ={'form' :form}
+    return render(request,'Workout/createExercise.html',context) 
+
+@login_required(login_url='main')
+def rankings(request):
+
+    bufor = Training.objects.filter().order_by('-weigth')
+    benchPressMasters = {}
+    top5 = 0;
+    for cybant in bufor:
+        if cybant.getExerciseName() == "bench press" and  top5 < 5: 
+            if cybant.customer.username in benchPressMasters:
+                pass
+            else:
+                benchPressMasters[cybant.customer.username]=cybant
+                top5 += 1
+    squatMasters = {}
+    top5 = 0;
+    for cybant in bufor:
+        if cybant.getExerciseName() == "squat" and  top5 < 5: 
+            if cybant.customer.username in squatMasters:
+                pass
+            else:
+                squatMasters[cybant.customer.username]=cybant
+                top5 += 1
+    deadLiftMasters = {}
+    top5 = 0;
+    for cybant in bufor:
+        if cybant.getExerciseName() == "dead lift" and  top5 < 5: 
+            if cybant.customer.username in deadLiftMasters:
+                pass
+            else:
+                deadLiftMasters[cybant.customer.username]=cybant
+                top5 += 1
+
+    context ={'benchPressMasters' :benchPressMasters.values() , 'squatMasters' :squatMasters.values() , 'deadLiftMasters' :deadLiftMasters.values()}    
+    return render(request, 'Workout/rankings.html', context)
+
+@login_required(login_url='main')
 def friends(request):
-
     customers = Customer.objects.all()
     relations = Relations.objects.all()
     loggredUsername = request.user.username
@@ -356,6 +377,7 @@ def friends(request):
     context = {'actualFriends':actualFriends , 'invitations':invitations , 'newFriends':newFriends , 'userToPossibileUnblock' : userToPossibileUnblock , 'myFilter':myFilter}
     return render(request, 'Workout/friends.html',context)
 
+@login_required(login_url='main')
 def friendProfile(request, pk):
     friend = Customer.objects.get(id=pk)
     username = friend.username
@@ -377,6 +399,7 @@ def friendProfile(request, pk):
                'training':training}
     return render(request, 'Workout/friendProfile.html', context)
 
+@login_required(login_url='main')
 def friendBlock(request,pk):
     customers = Customer.objects.all()
     friend = Customer.objects.get(id=pk)
@@ -401,6 +424,7 @@ def friendBlock(request,pk):
     context = {'friend':friend}
     return render(request, 'Workout/friendBlock.html', context)
 
+@login_required(login_url='main')
 def friendUnblock(request,pk):
     customers = Customer.objects.all()
     friend = Customer.objects.get(id=pk)
@@ -425,6 +449,7 @@ def friendUnblock(request,pk):
     context = {'friend':friend}
     return render(request, 'Workout/friendUnblock.html', context)
 
+@login_required(login_url='main')
 def friendDecline(request, pk):
     customers = Customer.objects.all()
     friendToDecline = Customer.objects.get(id=pk)
@@ -445,6 +470,7 @@ def friendDecline(request, pk):
     context = {'friendToDecline':friendToDecline}
     return render(request, 'Workout/friendDecline.html', context)
 
+@login_required(login_url='main')
 def friendConfirm(request , pk):
     customers = Customer.objects.all()
     friendToConfirm = Customer.objects.get(id=pk)
@@ -467,6 +493,7 @@ def friendConfirm(request , pk):
     context = {'friendToConfirm':friendToConfirm}
     return render(request, 'Workout/friendConfirm.html', context)
 
+@login_required(login_url='main')
 def friendInvite(request , pk):
     customers = Customer.objects.all()
     friendToInvite = Customer.objects.get(id=pk)
@@ -484,41 +511,8 @@ def friendInvite(request , pk):
     context = {'friendToInvite':friendToInvite}
     return render(request, 'Workout/friendInvite.html', context)
 
-def rankings(request):
-
-    bufor = Training.objects.filter().order_by('-weigth')
-    benchPressMasters = {}
-    top5 = 0;
-    for cybant in bufor:
-        if cybant.getExerciseName() == "bench press" and  top5 < 5: 
-            if cybant.customer.username in benchPressMasters:
-                pass
-            else:
-                benchPressMasters[cybant.customer.username]=cybant
-                top5 += 1
-    squatMasters = {}
-    top5 = 0;
-    for cybant in bufor:
-        if cybant.getExerciseName() == "squat" and  top5 < 5: 
-            if cybant.customer.username in squatMasters:
-                pass
-            else:
-                squatMasters[cybant.customer.username]=cybant
-                top5 += 1
-    deadLiftMasters = {}
-    top5 = 0;
-    for cybant in bufor:
-        if cybant.getExerciseName() == "dead lift" and  top5 < 5: 
-            if cybant.customer.username in deadLiftMasters:
-                pass
-            else:
-                deadLiftMasters[cybant.customer.username]=cybant
-                top5 += 1
-
-    context ={'benchPressMasters' :benchPressMasters.values() , 'squatMasters' :squatMasters.values() , 'deadLiftMasters' :deadLiftMasters.values()}    
-    return render(request, 'Workout/rankings.html', context)
-
-def messagesS(request , pk):
+@login_required(login_url='main')
+def makeMessages(request , pk):
     customers = Customer.objects.all()
     friend = Customer.objects.get(id=pk)
     loggedUsername = request.user.username
@@ -531,7 +525,7 @@ def messagesS(request , pk):
         newText = request.POST['newText']
         dialogue = Dialogues.create(thisUser[0] , friend ,newText)
         dialogue.save()
-        return redirect("messagesS" , friend.id)
+        return redirect("makeMessages" , friend.id)
 
     for cybant in dialogues:
         if (cybant.sender == thisUser[0] and cybant.receiver == friend) or(cybant.sender == friend and cybant.receiver == thisUser[0]):
@@ -549,15 +543,4 @@ def messagesS(request , pk):
     myText = myText.order_by('-id')
 
     context ={'myText':myText.order_by('-id') , 'myFilter':myFilter }
-    return render(request, 'Workout/messagesS.html', context)
-
-def allMeals(request):
-    meals = request.user.customer.meal_set.all()
-    context = {'meals': meals}
-    return render(request,'Workout/allMeals.html',context)
-
-def allTrainings(request):
-    trainings = request.user.customer.training_set.all()
-    print(trainings)
-    context = {'trainings':trainings}
-    return render(request,'Workout/allTrainings.html',context)
+    return render(request, 'Workout/makeMessages.html', context)
