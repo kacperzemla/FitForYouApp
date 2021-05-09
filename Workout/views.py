@@ -68,28 +68,14 @@ def profile(request):
     phone = request.user.customer.number
     height = request.user.customer.height
     weight = request.user.customer.weight
+
+    customer = Customer.objects.all()
+    for x in customer:
+        print(x.id)
+
     context = {'name': name, 'email': email,
                'phone': phone, 'height': height, 'weight': weight}
     return render(request, 'Workout/profile.html', context)
-
-@login_required(login_url='main')
-def createTraning(request, pk):
-    TrainingFormSet = inlineformset_factory(Customer, Training, fields=(
-        'exercise', 'weigth', 'sesion', 'reps', 'customer'), extra=10,can_delete=False)
-    customer = Customer.objects.get(id=pk)
-    formset = TrainingFormSet(
-        queryset=Training.objects.none(), instance=customer)
-    #form = TrainingForm(initial={'user':user})
-    if request.method == 'POST':
-        #print('Printing post:' ,request.POST)
-        formset = TrainingFormSet(request.POST, instance=customer)
-        if formset.is_valid():
-            formset.save()
-            return redirect('training')
-
-    context = {'formset': formset}
-
-    return render(request, 'Workout/createTraning.html', context)
 
 @login_required(login_url='main')
 def training(request):
@@ -105,6 +91,26 @@ def training(request):
 
     context = {'exercises': exercises, 'training_of_last_week': training_of_last_week, 'training_of_this_week': training_of_this_week}
     return render(request, 'Workout/training.html', context)
+
+@login_required(login_url='main')
+def createTraning(request, pk):
+    TrainingFormSet = inlineformset_factory(Customer, Training, fields=(
+        'exercise', 'weigth', 'sesion', 'reps', 'customer'), extra=10,can_delete=False)
+    
+
+    pk = str((int(pk)-4))
+    customer = Customer.objects.get(id=pk)
+    formset = TrainingFormSet(
+        queryset=Training.objects.none(), instance=customer)
+    if request.method == 'POST':
+        formset = TrainingFormSet(request.POST, instance=customer)
+        if formset.is_valid():
+            formset.save()
+            return redirect('training')
+
+    context = {'formset': formset}
+
+    return render(request, 'Workout/createTraning.html', context)
 
 @login_required(login_url='main')
 def deleteTraining(request, pk):
@@ -168,6 +174,9 @@ def diet(request):
 def createMeal(request, pk):
     MealFormSet = inlineformset_factory(Customer, Meal, fields=(
         'name', 'date', 'carbs', 'proteins', 'fats', 'kcal'), can_delete=False)
+    
+    pk = str((int(pk)-4))
+
     customer = Customer.objects.get(id=pk)
     formset = MealFormSet(queryset=Meal.objects.none(), instance=customer)
 
@@ -396,7 +405,7 @@ def friendProfile(request, pk):
 
     context = {'name': name, 'email': email,
                'phone': phone, 'height': height, 'weight': weight, 'username':username,
-               'training':training}
+               'training':training, 'friend':friend}
     return render(request, 'Workout/friendProfile.html', context)
 
 @login_required(login_url='main')
