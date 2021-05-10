@@ -97,8 +97,8 @@ def createTraning(request, pk):
     TrainingFormSet = inlineformset_factory(Customer, Training, fields=(
         'exercise', 'weigth', 'sesion', 'reps', 'customer'), extra=10,can_delete=False)
     
-
-    pk = str((int(pk)-4))
+    if (pk != "1"):
+        pk = str((int(pk)-4))
     customer = Customer.objects.get(id=pk)
     formset = TrainingFormSet(
         queryset=Training.objects.none(), instance=customer)
@@ -175,7 +175,8 @@ def createMeal(request, pk):
     MealFormSet = inlineformset_factory(Customer, Meal, fields=(
         'name', 'date', 'carbs', 'proteins', 'fats', 'kcal'), can_delete=False)
     
-    pk = str((int(pk)-4))
+    if (pk != "1"):
+        pk = str((int(pk)-4))
 
     customer = Customer.objects.get(id=pk)
     formset = MealFormSet(queryset=Meal.objects.none(), instance=customer)
