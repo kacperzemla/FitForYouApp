@@ -87,6 +87,72 @@ background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
         border-bottom: 2px solid #5aa6ee;
         background-color: rgb(49, 87, 214);
     }
+
+    .article{
+        background-color: #4595e073;
+        width: 70vw;
+        margin: auto;
+        height: auto;
+        margin-top: 2rem;
+        margin-bottom: 3rem;
+        display: flex;
+        border-radius: 7px;
+        overflow: hidden;
+        min-height: 250px;
+        font-family: 'Sunflower', sans-serif;
+        box-shadow: 0 10px 20px rgb(58, 93, 133);
+        position: relative;
+        color:rgb(65, 65, 65)
+    }
+
+    .article-img{
+        background-image: url('https://img.freepik.com/darmowe-zdjecie/mlody-sprawnosc-fizyczna-mezczyzna-w-studiu_7502-5008.jpg?size=626&ext=jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        flex-basis: 1;
+        width: 100%;
+        min-height: 250px;
+        background-position: top right;
+      /*  margin: 6px;
+        border-top-left-radius: 7px;
+        border-bottom-left-radius: 7px; */
+
+    }
+    .article-text{
+        flex-basis: 3;
+        margin: 0;
+        margin-left: 20px;
+    }
+
+    .article-text-title{
+        padding: 10px;
+        font-weight: 700;
+    }
+
+    .article-text-content{
+        padding: 15px;
+        margin-bottom: 30px;
+        font-weight: 600;
+    }
+
+    .article-text-date{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 15px;
+        font-weight: 600;
+        color:rgb(21, 62, 122)
+    }
+
+    @media (max-width: 768px){
+        .article{
+            flex-direction: column;
+        }
+        .article-img{
+            margin: 0;
+            border-radius: 0;
+        }
+    }
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -102,14 +168,15 @@ background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
                             class="fas fa-dumbbell"></i>&nbsp;Training</a>
                     <a class="nav-item nav-link" href="{% url 'exercises'%}"><i
                             class="fas fa-running"></i>&nbsp;Exercises</a>
-                    <a class="nav-item nav-link active" href="{% url 'diet' %}"><i
+                    <a class="nav-item nav-link " href="{% url 'diet' %}"><i
                             class="fas fa-utensils"></i>&nbsp;Diet</a>
                     <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" href="{% url 'calculator'%}"><i
                         class="fas fa-calculator"></i>&nbsp;Calculator</a>
                 <a class="nav-item nav-link" href="{% url 'rankings'%}"><i class="fas fa-trophy"></i>&nbsp;Rankings</a>
                 <a class="nav-item nav-link" href="{% url 'friends'%}"><i class="fas fa-users"></i>&nbsp;Friends</a>
-                <a class="nav-item nav-link" href="{% url 'articles'%}"><i class="fas fa-bookmark"></i>&nbsp;Articles</a>
+                <a class="nav-item nav-link active" href="{% url 'articles'%}"><i class="fas fa-bookmark"></i>&nbsp;Articles</a>
+
 
 
             </div>
@@ -120,106 +187,24 @@ background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
     <span><a class="nav-item nav-link" href="{% url 'logout' %}"">Logout</a></span>
 </nav>
 
-<div class=" text-center" style="margin-top: 15px;">
-    <label class="btn">
-        <a class="btn btn-primary mybtn" href="{% url 'createMeal' user.id%}">ADD NEW MEAL</a>
-    </label>
-    <label class="btn">
-        <a class="btn btn-primary mybtn" href="{% url 'allMeals' %}">VIEW ALL MEALS</a>
-    </label>
-    </div>
-
-    <div class="container text-center " style="margin-top: 15px;">
-        <div class="row ">
-            <div class="col-12 mx-auto">
-                <table class="mytable">
-                    <thead>
-                        <tr>
-                            <td colspan="9">This Week</td>
-                        </tr>
-                        <tr>
-
-                            <th> name </th>
-                            <th> day </th>
-                            <th>date</th>
-                            <th>fats</th>
-                            <th>proteins</th>
-                            <th> carbs </th>
-                            <th> kcal</th>
-                            <th></th>
-
-
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for i in meals_of_this_week reversed%}
-                        <tr>
-
-                            <td>{{i.name}}</td>
-                            <td>{{i.date| date:"l"}}</td>
-                            <td>{{i.date}}</td>
-                            <td>{{i.fats}}</td>
-                            <td>{{i.proteins}}</td>
-                            <td>{{i.carbs}}</td>
-                            <td>{{ i.kcal}}</td>
-
-
-                            <td> <a class="btn btn-sm btn-danger" href="{% url 'deleteMeal' i.id%}">DELETE</a>
-                            </td>
-
-                        </tr>
-
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+<div class="container">
+    <div class="article">
+        <div class="article-img"></div>
+        <div class="article-text">
+            <h1 class="article-text-title">Lorem ipsum dolor</h1>
+            <p class="article-text-content">, sit amet consectetur adipisicing elit. Iure alias eligendi
+             animi saepe maxime dolorum cumque reiciendis hic tempora nostrum delectus placeat consequatur nisi voluptas in earum blanditiis, beatae possimus!</p>
+            <span class="article-text-date">Posted: 30.05.2021</span>
         </div>
     </div>
-
-<div class="container text-center " style="margin-top: 15px;">
-    <div class="row ">
-        <div class="col-12 mx-auto">
-                <table class="mytable">
-                    <thead>
-                        <tr>
-                            <td colspan="9">Last Week</td>
-                        </tr>
-                        <tr>
-                            <th> name </th>
-                            <th> day </th>
-                            <th>date</th>
-                            <th>fats</th>
-                            <th>proteins</th>
-                            <th> carbs </th>
-                            <th> kcal</th>
-                            <th></th>
-
-
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for i in meals_of_last_week reversed%}
-                        <tr>
-
-                            <td>{{i.name}}</td>
-                            <td>{{i.date| date:"l"}}</td>
-                            <td>{{i.date}}</td>
-                            <td>{{i.fats}}</td>
-                            <td>{{i.proteins}}</td>
-                            <td>{{i.carbs}}</td>
-                            <td>{{ i.kcal}}</td>
-
-
-                            <td> <a class="btn btn-sm btn-danger"
-                                    href="{% url 'deleteMeal' i.id%}">DELETE</a> </td>
-
-                        </tr>
-
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+    <div class="article">
+        <div class="article-img" style="background-image: url('https://images.everydayhealth.com/images/diet-nutrition/mediterranean-diet/mediterranean-diet-food-list-meal-plan-722x406.jpg?sfvrsn=da69b6eb_0');"></div>
+        <div class="article-text">
+            <h1 class="article-text-title">Lorem ipsum dolor</h1>
+            <p class="article-text-content">, sit amet consectetur adipisicing elit. Iure alias eligendi
+             animi saepe maxime dolorum cumque reiciendis hic tempora nostrum delectus placeat consequatur nisi voluptas in earum blanditiis, beatae possimus!</p>
+            <span class="article-text-date">Posted: 29.05.2021</span>
         </div>
     </div>
+    
+</div>

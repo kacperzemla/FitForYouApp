@@ -35,4 +35,5 @@ urlpatterns = [
     path('makeMessages/<str:pk>',views.makeMessages, name='makeMessages'),
 
     path('inspiration',views.inspiration, name = 'inspiration'),
+    path('articles',views.articles, name='articles'),
    ]

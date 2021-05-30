@@ -1,3 +1,9 @@
+import json
+import os
+from pip._vendor import requests
+
+
+from django.http.response import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from . import templates
@@ -26,6 +32,17 @@ def register(request):
 
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
+        cap_url ="https://www.google.com/recaptcha/api/siteverify" #odwolujemy sie do api aby sprawdzic czy token jest poprawny czy nie 
+        captcha_token = request.POST.get("g-recaptcha-response")
+       
+        cap_secret = "6LcL-OYaAAAAACK_vdVwsvg4lyeC48vdOVgLoyzn"
+        cap_data = {"secret": cap_secret, "response": captcha_token}
+        cap_server_response = requests.post(url=cap_url, data=cap_data)
+        print(cap_server_response.text)
+        cap_json = json.loads(cap_server_response.text)
+        if cap_json['success'] == False:
+            messages.error(request,"Invalid captcha")
+            return HttpResponseRedirect("/register")
         if form.is_valid():
             user = form.save()
             Customer.objects.create(
@@ -96,6 +113,7 @@ def training(request):
 def createTraning(request, pk):
     TrainingFormSet = inlineformset_factory(Customer, Training, fields=(
         'exercise', 'weigth', 'sesion', 'reps', 'customer'), extra=10,can_delete=False)
+
     
     if (pk != "1"):
         pk = str((int(pk)-4))
@@ -559,3 +577,7 @@ def makeMessages(request , pk):
 def inspiration(request):
     context = {}
     return render(request, 'Workout/inspiration.html',context)
+def articles(request):
+    context = {}
+    return render(request,'Workout/articles.html',context)
+

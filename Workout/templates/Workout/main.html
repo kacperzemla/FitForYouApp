@@ -18,8 +18,7 @@
         html {
             margin: 0;
             padding: 0;
-            height: 100%;
-            
+            box-sizing: border-box;
             background-color: #5ca0f2;
             background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
 
@@ -85,35 +84,53 @@
             padding: 10px;
             margin-top: 10px;
         }
+
+        .mycontainer{
+            background-image: url('https://img4.goodfon.com/wallpaper/nbig/8/4e/bodibilder-press-abs-muscle-myshtsy-poza-bodybuilder-vorkaut.jpg');
+            width: auto;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: top;
+            position: relative;
+            text-align: center;
+        }
+
+        .title{
+            color: white;
+            text-transform: uppercase;
+            font-family: 'Sunflower', sans-serif;
+            font-weight: 700;
+            font-size: 6rem;
+            padding-top: 20%;
+        }
+
     </style>
 
 </head>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">FitForYou</a>
+        <a class="navbar-brand light" href="#">FitForYou</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="{% url 'articles'%}"><i class="fas fa-bookmark"></i>&nbsp;Articles</a>
+            </div>
+        </div>
      
     </div>
 </nav>
 
 
-<div class="container" style="margin-top: 7%;">
-    <div class="row">
-        <div class="col-md-6 text-right">
-            <form>
-                <button type="button" class="btn btn-dark btn-lg" >
+<div class=" mycontainer">
+                <h1 class="title">Be Fit<br> With US</h1>
+                <button type="button mybtn2" class="btn btn-dark btn-lg" style="margin-right: 30px;">
                     <a href="{% url 'register' %}" class="btn-lg" style="text-decoration: none; color: white;">Register</a></button>
-            </form>
-        </div>
-        <div class="col-md-6 text-left">
-            <form>
                 <button type="button" class="btn btn-dark btn-lg" >
                     <a href="{% url 'login' %}" class="btn-lg" style="text-decoration: none; color: white;">Log in</a></button>
-            </form>
-        </div>
-    </div>
 </div>
