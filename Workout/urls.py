@@ -33,4 +33,5 @@ urlpatterns = [
     path('friendInvite/<str:pk>',views.friendInvite, name='friendInvite'),
     path('friendUnblock/<str:pk>',views.friendUnblock, name='friendUnblock'),
     path('makeMessages/<str:pk>',views.makeMessages, name='makeMessages'),
+    path('articles',views.articles, name='articles'),
    ]
