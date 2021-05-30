@@ -554,3 +554,8 @@ def makeMessages(request , pk):
 
     context ={'myText':myText.order_by('-id') , 'myFilter':myFilter }
     return render(request, 'Workout/makeMessages.html', context)
+
+#@login_required(login_url='main')
+def inspiration(request):
+    context = {}
+    return render(request, 'Workout/inspiration.html',context)
