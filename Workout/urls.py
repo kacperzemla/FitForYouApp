@@ -36,4 +36,7 @@ urlpatterns = [
 
     path('inspiration',views.inspiration, name = 'inspiration'),
     path('articles',views.articles, name='articles'),
+    path('chats',views.chats, name='chats'),
+    path('chat/<str:room_name>/', views.room, name='room'),
+    path('get_more_tables/<str:pk>', views.get_more_tables, name='get_more_tables'),
    ]
