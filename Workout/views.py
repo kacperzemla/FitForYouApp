@@ -15,11 +15,12 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user
-from .forms import TrainingForm, CustomerForm, ExerciseForm
+from .forms import TrainingForm, CustomerForm, ExerciseForm 
 from django.forms import inlineformset_factory
 from datetime import timedelta
 from django.utils import timezone
 from datetime import datetime
+import random
 
 
 @unauthenticated_user 
@@ -573,9 +574,89 @@ def makeMessages(request , pk):
     context ={'myText':myText.order_by('-id') , 'myFilter':myFilter }
     return render(request, 'Workout/makeMessages.html', context)
 
-#@login_required(login_url='main')
+@login_required(login_url='main')
 def inspiration(request):
-    context = {}
+    exercises = Exercises.objects.all()
+    categoryChoice = "CATEGORY "
+    levelChoice = " LEVEL"
+    choice = 0
+    chest = []
+    legs = []
+    abs_ =[]
+    shoulders = []
+    bic_tric = []
+    booty =[]
+    cardio =[]
+    back = []
+    for  cybant in exercises :
+        if cybant.category ==  "CHEST":
+            chest.append(cybant)
+        elif cybant.category ==  "LEGS":
+            legs.append(cybant)
+        elif cybant.category ==  "ABS":
+            abs_.append(cybant)
+        elif cybant.category ==  "SHOULDERS":
+            shoulders.append(cybant)
+        elif cybant.category ==  "BICEPS & TRICEPS":
+            bic_tric.append(cybant)
+        elif cybant.category ==  "BOOTY":
+            booty.append(cybant)
+        elif cybant.category ==  "CARDIO":
+            cardio.append(cybant)
+        elif cybant.category ==  "BACK":
+            back.append(cybant)
+
+    if request.method == "GET":
+        try:
+            categoryChoice = request.GET['cat']
+            levelChoice = request.GET['lev']
+        except:
+            choice = " HAS WRONG INPUT DATA"
+            categoryChoice = "CATEGORY "
+            levelChoice = " LEVEL"
+ 
+        if choice != " HAS WRONG INPUT DATA":
+            if categoryChoice == 'CHEST':
+                while True:
+                    choice = random.choice(chest)
+                    if choice.level == levelChoice:
+                        break
+            elif categoryChoice == 'LEGS':
+                while True:
+                    choice = random.choice(legs)
+                    if choice.level == levelChoice:
+                        break
+            elif categoryChoice == 'ABS':
+                while True:
+                    choice = random.choice(abs_)
+                    if choice.level == levelChoice:
+                        break
+            elif categoryChoice == 'SHOULDERS':
+                while True: 
+                    choice = random.choice(shoulders)
+                    if choice.level == levelChoice:
+                        break
+            elif categoryChoice == 'BICEPS & TRICEPS':
+                while True:
+                    choice = random.choice(bic_tric)
+                    if choice.level == levelChoice:
+                        break
+            elif categoryChoice == 'BOOTY':
+                while True:
+                    choice = random.choice(booty)
+                    if choice.level == levelChoice:
+                        break
+            elif categoryChoice == 'CARDIO':
+                while True:
+                    choice = random.choice(cardio)
+                    if choice.level == levelChoice:
+                        break
+            else:
+                while True:
+                    choice = random.choice(back)
+                    if choice.level == levelChoice:
+                        break
+    context={'choice':choice,'categoryChoice':categoryChoice,'levelChoice':levelChoice}        
     return render(request, 'Workout/inspiration.html',context)
 def articles(request):
     context = {}
