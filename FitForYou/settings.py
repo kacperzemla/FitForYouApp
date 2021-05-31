@@ -29,7 +29,7 @@ SECRET_KEY = '$6uz(1+@h!iy%&h=9xzen4oa0+tf+02nb%^povsyoot*r&n93@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'Workout',
+    'channels',
 
     'django_filters',
     
@@ -78,7 +79,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'FitForYou.wsgi.application'
-
+ASGI_APPLICATION = 'FitForYou.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases

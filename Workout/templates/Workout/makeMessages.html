@@ -11,6 +11,7 @@
     crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://kit.fontawesome.com/b3e438769b.js" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
       body{
         background-color: #5ca0f2;
@@ -188,7 +189,7 @@ background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
                                 <button class="btn btn-primary mybtn"  type="submit" name="searchText">SEARCH</button>
                             </div>
                             </form>
-                            <table class="mytable">
+                            <table id="_appendHere" class="mytable">
                                 <thead>
                                     <tr>
                                         <th> sender </th>
@@ -215,3 +216,21 @@ background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
                 </div>
             </div>
             
+
+<script>
+
+  /*  var append_increment = 0;
+    setInterval(function() {
+        $.ajax({
+            type: "GET",
+            url: "{% url 'get_more_tables' friend.id %}",  // URL to your view that serves new info
+            data: {'append_increment': append_increment}
+        })
+        .done(function(response) {
+            $('#_appendHere').append(response);
+            append_increment += 10;
+        });
+    }, 10000) */
+    
+
+</script>

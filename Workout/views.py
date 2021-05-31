@@ -2,7 +2,7 @@ import json
 import os
 from pip._vendor import requests
 
-
+from django.db.models import Q
 from django.http.response import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -187,7 +187,7 @@ def diet(request):
 
     print(meals_of_last_week)
     context = {'meals_of_last_week': meals_of_last_week,'meals_of_this_week': meals_of_this_week}
-    return render(request, 'Workout\diet.html', context)
+    return render(request, 'Workout/diet.html', context)
 
 @login_required(login_url='main')
 def createMeal(request, pk):
@@ -544,6 +544,7 @@ def friendInvite(request , pk):
 def makeMessages(request , pk):
     customers = Customer.objects.all()
     friend = Customer.objects.get(id=pk)
+    
     loggedUsername = request.user.username
     thisUser = customers.filter(username=loggedUsername)
     dialogues = Dialogues.objects.all()
@@ -570,8 +571,9 @@ def makeMessages(request , pk):
         myFilter = TextFilter(request.POST, queryset=myText)
         myText = myFilter.qs
     myText = myText.order_by('-id')
-
-    context ={'myText':myText.order_by('-id') , 'myFilter':myFilter }
+   # if(friend.id != 1):
+    #    friend.id = friend.id + 4
+    context ={'myText':myText.order_by('-id') , 'myFilter':myFilter,'friend': friend }
     return render(request, 'Workout/makeMessages.html', context)
 
 @login_required(login_url='main')
@@ -662,3 +664,32 @@ def articles(request):
     context = {}
     return render(request,'Workout/articles.html',context)
 
+def chats(request):
+    return render(request,'Workout/index.html',{})
+
+def room(request, room_name):
+    return render(request, 'Workout/room.html', {
+        'room_name': room_name
+    })
+
+def get_more_tables(request, pk):
+    customers = Customer.objects.all()
+    friend = Customer.objects.get(id=pk)
+    loggedUsername = request.user.username
+    thisUser = customers.filter(username=loggedUsername)
+    increment = int(request.GET['append_increment'])
+    increment_to = increment + 10
+    dialogues = Dialogues.objects.all()
+    listOfText = []
+
+    for cybant in dialogues:
+        if (cybant.sender == thisUser[0] and cybant.receiver == friend) or(cybant.sender == friend and cybant.receiver == thisUser[0]):
+            listOfText.append(cybant.id)
+
+    messages = Dialogues.objects.filter(id__in=listOfText)
+   # messages = myText.order_by('-id')[increment:increment_to]
+    print(messages)
+    print(request.user.id)
+    #message__in = Dialogues.objects.filter(Q(sender=thisUser) | Q(receiver=thisUser)).order_by('-id')[increment:increment_to]
+
+    return render(request, 'Workout/get_more_tables.html', {'message': messages})
