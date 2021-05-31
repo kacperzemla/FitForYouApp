@@ -579,7 +579,7 @@ def inspiration(request):
     exercises = Exercises.objects.all()
     categoryChoice = "CATEGORY "
     levelChoice = " LEVEL"
-    choice = 0
+    choice = " NOT CHOESEN"
     chest = []
     legs = []
     abs_ =[]
@@ -606,10 +606,10 @@ def inspiration(request):
         elif cybant.category ==  "BACK":
             back.append(cybant)
 
-    if request.method == "GET":
+    if request.method == "POST":
         try:
-            categoryChoice = request.GET['cat']
-            levelChoice = request.GET['lev']
+            categoryChoice = request.POST['cat']
+            levelChoice = request.POST['lev']
         except:
             choice = " HAS WRONG INPUT DATA"
             categoryChoice = "CATEGORY "
