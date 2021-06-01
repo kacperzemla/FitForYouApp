@@ -198,7 +198,7 @@ background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
                                         <th> date </th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="append">
                                     {% for i in myText%}
                                     <tr>
                                         <td>{{i.sender}}</td>
@@ -206,9 +206,9 @@ background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
                                         <td>{{i.text}}</td>
                                         <td>{{i.date}}</td>
 
-                                    </tr>
+                                    </tr>  
 
-                                    {% endfor %}
+                                    {% endfor %} 
                                 </tbody>
                             </table>
                         </div>
@@ -219,18 +219,32 @@ background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
 
 <script>
 
-  /*  var append_increment = 0;
+   /* var append_increment = 0;
     setInterval(function() {
         $.ajax({
             type: "GET",
             url: "{% url 'get_more_tables' friend.id %}",  // URL to your view that serves new info
-            data: {'append_increment': append_increment}
+            data: {'messages': messages}
         })
         .done(function(response) {
-            $('#_appendHere').append(response);
-            append_increment += 10;
-        });
+            $('#_appendHere').html(messages);
+            alert('elo')
+           // append_increment += 10;
+        })
+        .fail(function( xhr, status, errorThrown ) {
+        alert("Nie udalo sie pobrac danych.");
+    });
     }, 10000) */
-    
+
+
+    function getMessages() {
+    $.get("{% url 'get_more_tables' friend.id %}", function(messages, status) {
+        $("#append").html(messages);
+    });
+    // repeat this method after 3 seconds
+    setTimeout(getMessages, 3000);
+    } 
+
+    getMessages();
 
 </script>

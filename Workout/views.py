@@ -39,7 +39,7 @@ def register(request):
         cap_secret = "6LcL-OYaAAAAACK_vdVwsvg4lyeC48vdOVgLoyzn"
         cap_data = {"secret": cap_secret, "response": captcha_token}
         cap_server_response = requests.post(url=cap_url, data=cap_data)
-        print(cap_server_response.text)
+     #   print(cap_server_response.text)
         cap_json = json.loads(cap_server_response.text)
         if cap_json['success'] == False:
             messages.error(request,"Invalid captcha")
@@ -104,7 +104,7 @@ def training(request):
     monday_of_next_week = monday_of_this_week+timedelta(days=7)
     training_of_last_week = request.user.customer.training_set.all().filter(date__gte=monday_of_last_week, date__lt=monday_of_this_week).order_by('-date')
     training_of_this_week = request.user.customer.training_set.all().filter(date__gte=monday_of_this_week, date__lt=monday_of_next_week).order_by('-date')
-    print(training_of_this_week)
+#    print(training_of_this_week)
     exercises = Exercises.objects.all()
 
     context = {'exercises': exercises, 'training_of_last_week': training_of_last_week, 'training_of_this_week': training_of_this_week}
@@ -157,7 +157,7 @@ def updateTraining(request,pk):
 @login_required(login_url='main')
 def allTrainings(request):
     trainings = request.user.customer.training_set.all()
-    print(trainings)
+  #  print(trainings)
     context = {'trainings':trainings}
     return render(request,'Workout/allTrainings.html',context)
 
@@ -185,7 +185,7 @@ def diet(request):
     meals_of_last_week = request.user.customer.meal_set.all().filter(date__gte=monday_of_last_week, date__lt=monday_of_this_week).order_by('-date')
     meals_of_this_week = request.user.customer.meal_set.all().filter(date__gte=monday_of_this_week, date__lt=monday_of_next_week).order_by('-date')
 
-    print(meals_of_last_week)
+ #   print(meals_of_last_week)
     context = {'meals_of_last_week': meals_of_last_week,'meals_of_this_week': meals_of_this_week}
     return render(request, 'Workout/diet.html', context)
 
@@ -276,7 +276,7 @@ def allMeals(request):
 @login_required(login_url='main')
 def exercises(request):
     exercises  = Exercises.objects.all()
-    print (exercises)
+  #  print (exercises)
     chest = []
     legs = []
     abs_ =[]
@@ -416,12 +416,12 @@ def friendProfile(request, pk):
     height = friend.height
     weight = friend.weight
 
-    print(friend)
+  #  print(friend)
 
     training = Training.objects.all()
     training = training.filter(customer = friend)
 
-    print(training)
+  #  print(training)
 
     context = {'name': name, 'email': email,
                'phone': phone, 'height': height, 'weight': weight, 'username':username,
@@ -563,9 +563,9 @@ def makeMessages(request , pk):
 
     myText = Dialogues.objects.filter(id__in=listOfText)
 
-    print(request.method)
-    print(request.POST)
-    print(request.GET)
+  #  print(request.method)
+   # print(request.POST)
+    #print(request.GET)
 
     if 'searchText' in request.POST:
         myFilter = TextFilter(request.POST, queryset=myText)
@@ -677,8 +677,8 @@ def get_more_tables(request, pk):
     friend = Customer.objects.get(id=pk)
     loggedUsername = request.user.username
     thisUser = customers.filter(username=loggedUsername)
-    increment = int(request.GET['append_increment'])
-    increment_to = increment + 10
+  #  increment = int(request.GET['append_increment'])
+  #  increment_to = increment + 10
     dialogues = Dialogues.objects.all()
     listOfText = []
 
@@ -686,10 +686,10 @@ def get_more_tables(request, pk):
         if (cybant.sender == thisUser[0] and cybant.receiver == friend) or(cybant.sender == friend and cybant.receiver == thisUser[0]):
             listOfText.append(cybant.id)
 
-    messages = Dialogues.objects.filter(id__in=listOfText)
+    messages = Dialogues.objects.filter(id__in=listOfText).order_by('-id')
    # messages = myText.order_by('-id')[increment:increment_to]
     print(messages)
-    print(request.user.id)
+   # print(request.user.id)
     #message__in = Dialogues.objects.filter(Q(sender=thisUser) | Q(receiver=thisUser)).order_by('-id')[increment:increment_to]
 
-    return render(request, 'Workout/get_more_tables.html', {'message': messages})
+    return render(request, 'Workout/get_more_tables.html', {'messages': messages})
