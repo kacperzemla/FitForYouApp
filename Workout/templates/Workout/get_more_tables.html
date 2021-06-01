@@ -1,14 +1,14 @@
 
 
 {% for i in messages %}
-
-<tr>
+<p><span class="sender">{{i.sender}}:</span>&nbsp;{{i.text}}</p>
+<!-- <tr>
     <td>{{i.sender}}</td>
     <td>{{i.receiver}}</td>
     <td>{{i.text}}</td>
     <td>{{i.date}}</td>
 
-</tr>
+</tr> -->
 
 {% endfor %}
 

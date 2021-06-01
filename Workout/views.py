@@ -688,7 +688,7 @@ def get_more_tables(request, pk):
 
     messages = Dialogues.objects.filter(id__in=listOfText).order_by('-id')
    # messages = myText.order_by('-id')[increment:increment_to]
-    print(messages)
+  #  print(messages)
    # print(request.user.id)
     #message__in = Dialogues.objects.filter(Q(sender=thisUser) | Q(receiver=thisUser)).order_by('-id')[increment:increment_to]
 

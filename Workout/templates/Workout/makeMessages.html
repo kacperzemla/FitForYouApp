@@ -122,6 +122,87 @@ background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
         font-weight: bold;
        
     }
+    
+    #append{
+        display: flex;
+        flex-direction: column-reverse;
+        height: 400px;
+        overflow: hidden; 
+        text-align: left;
+        overflow-y: scroll;
+        padding-left: 2rem;
+        border-bottom:2px solid #5aa6ee;
+        
+    }
+
+    #append p{
+        overflow-wrap: break-word;
+    }
+
+    #append::-webkit-scrollbar{
+        width: 0.2rem;
+    }
+    #append::-webkit-scrollbar-track{
+        background: #3542b8;
+    }
+
+    #append::-webkit-scrollbar-thumb{
+        background: #83eaf1;
+    }
+
+    .sender{
+        color: #3542b8;
+    }
+
+    .new_text{
+        border-radius: 10px;
+        border:2px solid #3542b8;
+        background: transparent;
+        word-wrap: break-word;
+        height: auto;
+        outline: none;
+        caret-color: white;
+        color: white;
+    }
+
+    .new_text:focus{
+        border: 3px solid #83eaf1;
+    }
+
+    .new_text::placeholder{
+        color: white;
+        transition: color 0.4s ease;
+    }
+
+    .new_text:focus::placeholder{
+        color: transparent;
+    }
+
+    #id_text{
+        border-radius: 10px;
+        border: 2px solid #3542b8;
+        background: transparent;
+        outline: none;
+        caret-color: white;
+        color: white;
+    }
+
+    #id_text:focus{
+        border: 3px solid #83eaf1;
+    }
+
+    #id_text:focus::placeholder{
+        color: transparent;
+    }
+
+    #id_text::placeholder{
+        color: white;
+        transition: color 0.4s ease;
+    }
+
+    .mybtn-wider{
+        padding: 10px 20px 10px 20px;
+    }
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -164,58 +245,53 @@ background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
     
 
             <div class="row ">
-                <div class="col-9 mx-auto">
+                <div class="col-6 mx-auto">
                     
                     <div class="invite_friends">
                         <div class="invite_friends_header text-center">
-                            MESSAGES
+                            CHAT WITH {{friend}}
                         </div>
 
-                        <div class="send">
-                            <form method="POST">
-                                {% csrf_token %}
-                                <label>
-                                    Enter your text
-                                    <input type="text" name="newText" class="new_text">
-                                </label>
-                                <input type="submit" value="send" name="newTextSend" class="mybtn">
-                                <form>
-                        </div>
+                       
 
                         <div class="">
-                            <div style="margin-top: 15px;">
-                            <form method="POST">
-                                {{myFilter.form}}
-                                <button class="btn btn-primary mybtn"  type="submit" name="searchText">SEARCH</button>
-                            </div>
+                          
                             </form>
-                            <table id="_appendHere" class="mytable">
-                                <thead>
-                                    <tr>
-                                        <th> sender </th>
-                                        <th> receiver </th>
-                                        <th> text </th>
-                                        <th> date </th>
-                                    </tr>
-                                </thead>
-                                <tbody id="append">
+                            
+                                <div id="append">
                                     {% for i in myText%}
-                                    <tr>
+                               <!--     <tr>
                                         <td>{{i.sender}}</td>
                                         <td>{{i.receiver}}</td>
                                         <td>{{i.text}}</td>
                                         <td>{{i.date}}</td>
 
-                                    </tr>  
+                                    </tr>  -->
+                                   <p><span class="sender">{{i.sender}}:</span>&nbsp;{{i.text}}</p> 
 
                                     {% endfor %} 
-                                </tbody>
-                            </table>
+                                </div>
+                                <div class="send">
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <label>
+                                            
+                                            <input type="text" name="newText" class="new_text" placeholder="Enter message">
+                                        </label>
+                                        <input type="submit" value="send" name="newTextSend" class="mybtn mybtn-wider">
+                                        <form>
+                                </div>
+                                <div style="margin-top: 15px; margin-bottom: 15px;">
+                                    <form method="POST">
+                                        {{myFilter.form}}
+                                        <button class="btn btn-primary mybtn"  type="submit" name="searchText">SEARCH</button>
+                                    </div>
                         </div>
                     </div>
                 </div>
             </div>
             
+
 
 <script>
 
@@ -240,11 +316,20 @@ background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
     function getMessages() {
     $.get("{% url 'get_more_tables' friend.id %}", function(messages, status) {
         $("#append").html(messages);
+        
     });
     // repeat this method after 3 seconds
     setTimeout(getMessages, 3000);
     } 
 
     getMessages();
+
+    function label(){
+        $('label[for="id_text"]').remove();
+        $("#id_text").attr("placeholder","Search text");
+        
+    }
+
+    label();
 
 </script>
