@@ -12,11 +12,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://kit.fontawesome.com/b3e438769b.js" crossorigin="anonymous"></script>
 <style>
-      body{
+    body {
         background-color: #5ca0f2;
-background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
+        background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
 
     }
+
     .hello-msg {
         font-size: 18px;
         color: white;
@@ -73,7 +74,7 @@ background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
         background-color: rgb(49, 87, 214);
     }
 
-    .invite_friends{
+    .invite_friends {
         margin: 25px 0;
         border: 1px solid #5aa6ee;
         border-radius: 5px 5px 0 0;
@@ -83,7 +84,7 @@ background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
         color: white;
     }
 
-    .invite_friends_header{
+    .invite_friends_header {
         border-bottom: 1px solid #5aa6ee;
         padding: 5px;
         background-color: #3542b8;
@@ -92,7 +93,7 @@ background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
         text-transform: uppercase;
         font-size: 0.9em;
         font-weight: bold;
-       
+
     }
 </style>
 
@@ -116,8 +117,10 @@ background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
                 <a class="nav-item nav-link" href="{% url 'rankings'%}"><i class="fas fa-trophy"></i>&nbsp;Rankings</a>
                 <a class="nav-item nav-link active" href="{% url 'friends'%}"><i
                         class="fas fa-users"></i>&nbsp;Friends</a>
-                        <a class="nav-item nav-link" href="{% url 'articles'%}"><i class="fas fa-bookmark"></i>&nbsp;Articles</a>
-                        <a class="nav-item nav-link" href="{% url 'inspiration'%}"><i class="fas fa-lightbulb"></i>&nbsp;Inspiration</a>
+                <a class="nav-item nav-link" href="{% url 'articles'%}"><i
+                        class="fas fa-bookmark"></i>&nbsp;Articles</a>
+                <a class="nav-item nav-link" href="{% url 'inspiration'%}"><i
+                        class="fas fa-lightbulb"></i>&nbsp;Inspiration</a>
 
 
 
@@ -129,100 +132,100 @@ background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
     <span><a class="nav-item nav-link" href="{% url 'logout' %}"">Logout</a></span>
 </nav>
 
-<div class=" container text-center">
+<div class=" container-fluid text-center">
             <div class="row ">
-                <div class="col-5 mx-auto">
-                    
+                <div class="col-lg-5 mx-auto">
 
-                            <table class="mytable">
-                                <thead>
-                                    <tr>
-                                        <th colspan="4">
-                                            Friends
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th> username </th>
-                                        <th> profile </th>
-                                        <th> block </th>
-                                        <th>messages</th>
-                                    </tr>
-                                </thead>
 
-                                <tbody>{% for i in actualFriends%}
-                                    <tr>
-                                        <td>{{i.username}}</td>
-                                        <td> <a class="btn btn-sm btn-info"
-                                                href="{% url 'friendProfile' i.id%}">PROFILE</a> </td>
-                                        <td> <a class="btn btn-sm btn-danger"
-                                                href="{% url 'friendBlock' i.id%}">BLOCK</a> </td>
-                                        <td> <a class="btn btn-sm btn-info" href="{% url 'makeMessages' i.id%}">MESSAGE</a> </td>
-                                    </tr>
+                    <table class="mytable">
+                        <thead>
+                            <tr>
+                                <th colspan="4">
+                                    Friends
+                                </th>
+                            </tr>
+                            <tr>
+                                <th> username </th>
+                                <th> profile </th>
+                                <th> block </th>
+                                <th>messages</th>
+                            </tr>
+                        </thead>
 
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        
-                    </div>
-               
+                        <tbody>{% for i in actualFriends%}
+                            <tr>
+                                <td>{{i.username}}</td>
+                                <td> <a class="btn btn-sm btn-info" href="{% url 'friendProfile' i.id%}">PROFILE</a>
+                                </td>
+                                <td> <a class="btn btn-sm btn-danger" href="{% url 'friendBlock' i.id%}">BLOCK</a> </td>
+                                <td> <a class="btn btn-sm btn-info" href="{% url 'makeMessages' i.id%}">MESSAGE</a>
+                                </td>
+                            </tr>
 
-                <div class="col-4 mx-auto">
-                  
-
-                            <table class="mytable">
-                                <thead>
-                                    <tr>
-                                        <th colspan="3">Invitations</th>
-                                    </tr>
-                                    <tr>
-                                        <th> username </th>
-                                        <th> confirm </th>
-                                        <th> decline </th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>{% for i in invitations%}
-                                    <tr>
-                                        <td>{{i.username}}</td>
-                                        <td> <a class="btn btn-sm btn-info"
-                                                href="{% url 'friendConfirm' i.id%}">CONFIRM</a> </td>
-                                        <td> <a class="btn btn-sm btn-info"
-                                                href="{% url 'friendDecline' i.id%}">DECLINE</a> </td>
-                                    </tr>
-
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                      
-
-                   
-
-                            <table class="mytable">
-                                <thead>
-                                    <tr>
-                                        <th colspan="3">BLOCKED</th>
-                                    </tr>
-                                    <tr>
-                                        <th> username </th>
-                                        <th> unblocked </th>
-                                    </tr>
-                                </thead>
-
-                                <tbody> {% for i in userToPossibileUnblock%}
-                                    <tr>
-                                        <td>{{i.username}}</td>
-                                        <td> <a class="btn btn-sm btn-info"
-                                                href="{% url 'friendUnblock' i.id%}">UNBLOCK</a> </td>
-                                    </tr>
-
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                
+                            {% endfor %}
+                        </tbody>
+                    </table>
 
                 </div>
 
-                <div class="col-3 mx-auto">
+
+                <div class="col-lg-4 mx-auto">
+
+
+                    <table class="mytable">
+                        <thead>
+                            <tr>
+                                <th colspan="3">Invitations</th>
+                            </tr>
+                            <tr>
+                                <th> username </th>
+                                <th> confirm </th>
+                                <th> decline </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>{% for i in invitations%}
+                            <tr>
+                                <td>{{i.username}}</td>
+                                <td> <a class="btn btn-sm btn-info" href="{% url 'friendConfirm' i.id%}">CONFIRM</a>
+                                </td>
+                                <td> <a class="btn btn-sm btn-info" href="{% url 'friendDecline' i.id%}">DECLINE</a>
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+
+
+
+                    <table class="mytable">
+                        <thead>
+                            <tr>
+                                <th colspan="3">BLOCKED</th>
+                            </tr>
+                            <tr>
+                                <th> username </th>
+                                <th> unblocked </th>
+                            </tr>
+                        </thead>
+
+                        <tbody> {% for i in userToPossibileUnblock%}
+                            <tr>
+                                <td>{{i.username}}</td>
+                                <td> <a class="btn btn-sm btn-info" href="{% url 'friendUnblock' i.id%}">UNBLOCK</a>
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+                <div class="col-lg-3 mx-auto" >
                     <div class="invite_friends">
                         <div class="invite_friends_header text-center">
                             Invite new friends
@@ -233,7 +236,7 @@ background-image: linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%);
                                 <button class="btn btn-primary" type="submit" style="margin-top: 15px;">SEARCH</button>
                             </form>
                             <table class="mytable" style="color: white;">
-                                
+
                                 <thead>
                                     <tr>
                                         <th> username </th>

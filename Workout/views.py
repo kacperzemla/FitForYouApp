@@ -21,7 +21,7 @@ from datetime import timedelta
 from django.utils import timezone
 from datetime import datetime
 import random
-
+from django.contrib.admin.views.decorators import staff_member_required
 
 @unauthenticated_user 
 def main(request):
@@ -672,24 +672,28 @@ def room(request, room_name):
         'room_name': room_name
     })
 
+@login_required(login_url='main')
 def get_more_tables(request, pk):
-    customers = Customer.objects.all()
-    friend = Customer.objects.get(id=pk)
-    loggedUsername = request.user.username
-    thisUser = customers.filter(username=loggedUsername)
-  #  increment = int(request.GET['append_increment'])
-  #  increment_to = increment + 10
-    dialogues = Dialogues.objects.all()
-    listOfText = []
+    try:
+        customers = Customer.objects.all()
+        friend = Customer.objects.get(id=pk)
+        loggedUsername = request.user.username
+        thisUser = customers.filter(username=loggedUsername)
+    #  increment = int(request.GET['append_increment'])
+    #  increment_to = increment + 10
+        dialogues = Dialogues.objects.all()
+        listOfText = []
 
-    for cybant in dialogues:
-        if (cybant.sender == thisUser[0] and cybant.receiver == friend) or(cybant.sender == friend and cybant.receiver == thisUser[0]):
-            listOfText.append(cybant.id)
+        for cybant in dialogues:
+            if (cybant.sender == thisUser[0] and cybant.receiver == friend) or(cybant.sender == friend and cybant.receiver == thisUser[0]):
+                listOfText.append(cybant.id)
 
-    messages = Dialogues.objects.filter(id__in=listOfText).order_by('-id')
-   # messages = myText.order_by('-id')[increment:increment_to]
-  #  print(messages)
-   # print(request.user.id)
-    #message__in = Dialogues.objects.filter(Q(sender=thisUser) | Q(receiver=thisUser)).order_by('-id')[increment:increment_to]
-
-    return render(request, 'Workout/get_more_tables.html', {'messages': messages})
+        messages = Dialogues.objects.filter(id__in=listOfText).order_by('-id')
+    # messages = myText.order_by('-id')[increment:increment_to]
+    #  print(messages)
+    # print(request.user.id)
+        #message__in = Dialogues.objects.filter(Q(sender=thisUser) | Q(receiver=thisUser)).order_by('-id')[increment:increment_to]
+    
+        return render(request, 'Workout/get_more_tables.html', {'messages': messages})
+    except:
+        return HttpResponse('Nie ma takiego użytkownika')
